@@ -1,13 +1,6 @@
 {
   "users": [
     {
-      "id": "u_gys",
-      "name": "孙工艺",
-      "role": "unit",
-      "unitId": "gys",
-      "password": "0000"
-    },
-    {
       "id": "u_hr",
       "name": "恒锐",
       "role": "unit",
@@ -15,106 +8,113 @@
       "password": "0000"
     },
     {
-      "id": "u22",
-      "name": "王世博",
+      "id": "u_gys",
+      "name": "孙工艺",
+      "role": "unit",
+      "unitId": "gys",
+      "password": "0000"
+    },
+    {
+      "id": "u21",
+      "name": "黄长鹏",
       "role": "admin",
       "unitId": null,
       "password": "0001"
     },
     {
       "id": "u23",
-      "name": "张伟",
-      "role": "admin",
-      "unitId": null,
-      "password": "0001"
-    },
-    {
-      "id": "u24",
       "name": "潘富康",
       "role": "admin",
       "unitId": null,
       "password": "0001"
     },
     {
+      "id": "u24",
+      "name": "张伟",
+      "role": "admin",
+      "unitId": null,
+      "password": "0001"
+    },
+    {
       "id": "u25",
-      "name": "谷兵",
-      "role": "unit",
-      "unitId": "jg",
-      "password": "0000"
-    },
-    {
-      "id": "u26",
-      "name": "王继辉",
-      "role": "unit",
-      "unitId": "xl",
-      "password": "0000"
-    },
-    {
-      "id": "u27",
-      "name": "李聚涛",
-      "role": "unit",
-      "unitId": "jjg",
-      "password": "0000"
-    },
-    {
-      "id": "u28",
       "name": "洪亮",
       "role": "expert",
       "unitId": null,
       "password": "0000"
     },
     {
-      "id": "u29",
-      "name": "吴陆洋",
-      "role": "expert",
-      "unitId": null,
-      "password": "0000"
-    },
-    {
-      "id": "u30",
+      "id": "u26",
       "name": "王继辉",
       "role": "expert",
       "unitId": null,
       "password": "0000"
     },
     {
-      "id": "u31",
-      "name": "刘庆伟",
+      "id": "u27",
+      "name": "吴陆洋",
       "role": "expert",
       "unitId": null,
       "password": "0000"
     },
     {
-      "id": "u32",
-      "name": "刘国",
-      "role": "expert",
-      "unitId": null,
-      "password": "0000"
-    },
-    {
-      "id": "u33",
-      "name": "胡永峰",
-      "role": "expert",
-      "unitId": null,
-      "password": "0000"
-    },
-    {
-      "id": "u34",
-      "name": "彭育东",
-      "role": "expert",
-      "unitId": null,
-      "password": "0000"
-    },
-    {
-      "id": "u35",
+      "id": "u28",
       "name": "樊永斌",
       "role": "expert",
       "unitId": null,
       "password": "0000"
     },
     {
+      "id": "u29",
+      "name": "刘法旺",
+      "role": "expert",
+      "unitId": null,
+      "password": "0000"
+    },
+    {
+      "id": "u30",
+      "name": "刘国",
+      "role": "expert",
+      "unitId": null,
+      "password": "0000"
+    },
+    {
+      "id": "u31",
+      "name": "胡永峰",
+      "role": "expert",
+      "unitId": null,
+      "password": "0000"
+    },
+    {
+      "id": "u32",
+      "name": "彭育东",
+      "role": "expert",
+      "unitId": null,
+      "password": "0000"
+    },
+    {
+      "id": "u33",
+      "name": "王跃功",
+      "role": "expert",
+      "unitId": null,
+      "password": "0000"
+    },
+    {
+      "id": "u34",
+      "name": "刘庆伟",
+      "role": "expert",
+      "unitId": null,
+      "password": "0000"
+    },
+    {
+      "id": "u35",
+      "name": "刘国",
+      "role": "expert",
+      "unitId": null,
+      "password": "0000"
+    },
+    {
       "id": "u36",
-      "name": "刘伟波",
+      "name": "李聚涛",
       "role": "expert",
       "unitId": null,
       "password": "0000"
@@ -128,90 +128,104 @@
     },
     {
       "id": "u38",
-      "name": "王继辉",
+      "name": "刘法旺",
       "role": "expert",
       "unitId": null,
       "password": "0000"
     },
     {
       "id": "u39",
-      "name": "刘法旺",
-      "role": "expert",
-      "unitId": null,
+      "name": "谷兵",
+      "role": "unit",
+      "unitId": "jg",
       "password": "0000"
     },
     {
       "id": "u40",
+      "name": "王继辉",
+      "role": "unit",
+      "unitId": "xl",
+      "password": "0000"
+    },
+    {
+      "id": "u41",
+      "name": "李聚涛",
+      "role": "unit",
+      "unitId": "jjg",
+      "password": "0000"
+    },
+    {
+      "id": "u42",
       "name": "刘国",
       "role": "unit",
       "unitId": "zz",
       "password": "0000"
     },
     {
-      "id": "u41",
+      "id": "u43",
       "name": "朱予滨",
       "role": "unit",
       "unitId": "jjg2",
       "password": "0000"
     },
     {
-      "id": "u42",
+      "id": "u44",
       "name": "董威",
       "role": "unit",
       "unitId": "sc",
       "password": "0000"
     },
     {
-      "id": "u43",
+      "id": "u45",
       "name": "刘伟波",
       "role": "unit",
       "unitId": "cg",
       "password": "0000"
     },
     {
-      "id": "u44",
+      "id": "u46",
       "name": "王跃功",
       "role": "unit",
       "unitId": "js",
       "password": "0000"
     },
     {
-      "id": "u45",
+      "id": "u47",
       "name": "杨晓峰",
       "role": "unit",
       "unitId": "yy",
       "password": "0000"
     },
     {
-      "id": "u46",
+      "id": "u48",
       "name": "洪亮",
       "role": "unit",
       "unitId": "zl",
       "password": "0000"
     },
     {
-      "id": "u47",
+      "id": "u49",
       "name": "黄海涛",
       "role": "unit",
       "unitId": "ah",
       "password": "0000"
     },
     {
-      "id": "u48",
+      "id": "u50",
       "name": "姜喜",
       "role": "unit",
       "unitId": "scgl",
       "password": "0000"
     },
     {
-      "id": "u49",
+      "id": "u51",
       "name": "刘法旺",
       "role": "unit",
       "unitId": "hr",
       "password": "0000"
     },
     {
-      "id": "u50",
+      "id": "u52",
       "name": "刘庆伟",
       "role": "unit",
       "unitId": "gys",
@@ -228,122 +242,187 @@
   ],
   "deductions": [
     {
-      "id": "d1",
-      "unitId": "sc",
-      "score": 1,
-      "reason": "阳泉特殊架要求总装分厂7月2日交检完，阳泉主机要求总装分厂7月2日组装10台，未完成。原因是阳泉提供采购件未回厂完，无法组装。责任单位：市场开发部。",
-      "year": 2026,
-      "month": 7,
-      "time": "2026-07-30T03:19:16.548Z"
-    },
-    {
-      "id": "d3",
+      "id": "d5",
       "unitId": "jjg",
       "score": 1,
-      "reason": "缸筒镀铬前加工要求机加工分厂7月2日配套75台，实际立柱配套50台，小千斤顶配套完成。原因是立柱一次焊接头影响，中缸筒刮滚影响。责任单位：生产部、机加工分厂",
+      "reason": "缸筒镀铬前加工要求机加工分厂7月2日配套75台，实际立柱配套50台，小千斤顶配套完成。原因是立柱一次焊接头影响，中缸筒刮滚影响。",
       "year": 2026,
       "month": 7,
-      "time": "2026-07-30T03:21:28.404Z"
+      "time": "2026-08-04T07:46:55.812Z"
     },
     {
-      "id": "d4",
-      "unitId": "cg",
-      "score": 1,
-      "reason": "要求千斤顶锻件6月30日回厂完，实际回厂100台。原因原材料回厂晚，第50台锻件6月29日才开始外转，责任单位：采购部",
-      "year": 2026,
-      "month": 7,
-      "time": "2026-07-30T03:22:00.476Z"
-    },
-    {
-      "id": "d5",
-      "unitId": "cg",
-      "score": 1,
-      "reason": "苏艾克按倒排计划要求，截至7月23日，苏艾克特殊架DN25胶管未按要求回厂完，影响联调支架组装。责任单位：采购部",
-      "year": 2026,
-      "month": 7,
-      "time": "2026-07-30T03:26:14.452Z"
-    },
-    {
-      "id": "d6",
+      "id": "d10",
       "unitId": "hr",
       "score": 1,
-      "reason": "苏艾克杆类镀铬件要求7月16日转出32台，实际转出28台。未完成，责任单位：恒锐公司。",
+      "reason": "杆类镀铬件要求7月16日转出32台，实际转出28台，未完成。",
       "year": 2026,
       "month": 7,
-      "time": "2026-07-30T03:28:42.212Z"
+      "time": "2026-08-04T08:08:38.683Z"
     },
     {
-      "id": "d7",
+      "id": "d11",
+      "unitId": "cg",
+      "score": 1,
+      "reason": "按照倒排计划，截至7月23日，苏艾克特殊架DN25胶管未按要求回厂完",
+      "year": 2026,
+      "month": 7,
+      "time": "2026-08-04T08:09:05.187Z"
+    },
+    {
+      "id": "d12",
+      "unitId": "scgl",
+      "score": 1,
+      "reason": "外协返修镀铬和熔碳钢未回厂配套",
+      "year": 2026,
+      "month": 7,
+      "time": "2026-08-04T08:09:31.522Z"
+    },
+    {
+      "id": "d13",
+      "unitId": "cg",
+      "score": 1,
+      "reason": "按倒排计划要求，截至7月30日，苏艾克主阀反冲洗、推移传感器要求回厂完，实际回厂20台",
+      "year": 2026,
+      "month": 7,
+      "time": "2026-08-04T08:09:45.842Z"
+    },
+    {
+      "id": "d14",
       "unitId": "hr",
       "score": 1,
-      "reason": "苏艾克杆类镀铬件要求7月16日转出32台，实际转出28台。未完成，责任单位：恒锐公司",
+      "reason": "7月30日外圆镀铬件配套82台，实际配套70台，未完成。",
       "year": 2026,
       "month": 7,
-      "time": "2026-07-30T05:40:01.934Z"
+      "time": "2026-08-04T08:10:01.450Z"
     },
     {
-      "id": "d8",
+      "id": "d15",
+      "unitId": "cg",
+      "score": 1,
+      "reason": "开封70台面漆，因招标晚，导致油漆回厂影响使用。9月10日需要喷面漆，截至9月12日下午面漆才回厂，影响结构件喷漆发货。",
+      "year": 2026,
+      "month": 9,
+      "time": "2026-09-21T00:19:37.569Z"
+    },
+    {
+      "id": "d16",
+      "unitId": "jg",
+      "score": 2,
+      "reason": "上条加分错误，本条抵消。",
+      "year": 2026,
+      "month": 9,
+      "time": "2026-09-21T00:20:17.408Z"
+    },
+    {
+      "id": "d17",
+      "unitId": "zz",
+      "score": 2,
+      "reason": "上条加分错误，这条抵消。",
+      "year": 2026,
+      "month": 9,
+      "time": "2026-09-21T00:21:18.993Z"
+    },
+    {
+      "id": "d18",
+      "unitId": "zz",
+      "score": 1,
+      "reason": "9月18日周五调度会和周计划要求开封70台结构件9月18日喷漆配套，9月19日发货配套。总装分厂未按要求执行，导致9月20日仍未发货配套，严重影响交期。扣2分。",
+      "year": 2026,
+      "month": 9,
+      "time": "2026-09-21T00:22:33.313Z"
+    },
+    {
+      "id": "d19",
       "unitId": "sc",
       "score": 1,
-      "reason": "苏艾克缸筒镀铬前加工要求机加工分厂7月2日配套75台，实际立柱配套50台，小千斤顶配套完成。原因是立柱一次焊接头影响，中缸筒刮滚影响。责任单位：生产部、机加工分厂（由生产管理部申诉转移）",
+      "reason": "1、黄陶结构件已经交检完毕，兖矿监理通知场地受限暂停发货；\n2、智德公司金沙金泰结构件已清磨完，交检发货2车，剩余1车监理通知场地受限暂停发货。由于发货不及时，占用生产场地，扣1分。",
       "year": 2026,
-      "month": 7,
-      "time": "2026-07-30T07:18:18.088Z"
+      "month": 8,
+      "time": "2026-09-21T00:25:06.284Z"
+    },
+    {
+      "id": "d20",
+      "unitId": "js",
+      "score": 1,
+      "reason": "三伸缩支架计划9月8日到榆林会展中心参展，技术中心临时通知压架取安标（因第一次压架后不符合安标中心技术要求，需要二次压架），打乱原有参展安排。扣1分。",
+      "year": 2026,
+      "month": 8,
+      "time": "2026-09-21T00:25:56.051Z"
+    },
+    {
+      "id": "d21",
+      "unitId": "js",
+      "score": 1,
+      "reason": "越南样机项目，技术中心临时改图，无法按期组装。扣1分",
+      "year": 2026,
+      "month": 8,
+      "time": "2026-09-21T00:26:28.787Z"
     }
   ],
   "appeals": [
     {
-      "id": "a1",
-      "deductionId": "d2",
-      "unitId": "scgl",
-      "reason": "1111",
-      "responsibleUnitId": "sc",
+      "id": "a2",
+      "deductionId": "d3",
+      "unitId": "zz",
+      "reason": "此责任应该为结构件分厂周转延期造成的",
+      "responsibleUnitId": "jg",
       "status": "approved",
-      "time": "2026-07-30T07:14:35.657Z",
+      "time": "2026-07-29T02:29:47.995Z",
       "votes": [
         {
-          "userId": "u29",
+          "userId": "u25",
           "agree": true,
-          "time": "2026-07-30T07:16:34.537Z"
+          "time": "2026-08-04T08:02:50.982Z"
         },
         {
-          "userId": "u30",
-          "agree": false,
-          "time": "2026-07-30T07:16:52.288Z"
+          "userId": "u26",
+          "agree": true,
+          "time": "2026-08-04T08:03:09.445Z"
         },
         {
-          "userId": "u28",
+          "userId": "u27",
           "agree": true,
-          "time": "2026-07-30T07:17:47.720Z"
+          "time": "2026-08-04T08:03:54.293Z"
         }
       ],
       "result": {
-        "note": "同意 2票 > 不同意 1票，扣分已转移至市场部"
+        "note": "同意 3票 > 不同意 0票，扣分已转移至结构件分厂"
       },
       "assignedExperts": [
-        "u28",
-        "u29",
-        "u30"
+        "u25",
+        "u26",
+        "u27"
       ]
     }
   ],
   "nextIds": {
-    "deduction": 9,
-    "appeal": 2,
-    "user": 51,
-    "bonus": 2
+    "deduction": 22,
+    "appeal": 3,
+    "user": 53,
+    "bonus": 8
   },
   "_dataCleared": true,
+  "_encToken": "98468863bb4c100a2aad677f6e6d47ed7fd53a2ffcacf13ea20470cf35e5e1375a8b953bb2476914a83445b1f8c87ce9351d3882d640fd748aadb64af2677e8f4c8a9ad3",
+  "_updatedAt": 1790661898210,
   "bonuses": [
     {
-      "id": "b1",
-      "unitId": "hr",
-      "score": 1,
-      "reason": "苏艾克杆类镀铬件要求7月16日转出32台，实际转出28台。未完成，责任单位：恒锐公司",
+      "id": "b6",
+      "unitId": "jg",
+      "score": 2,
+      "reason": "9月18日周五调度会和周计划要求开封70台结构件9月18日喷漆配套，9月19日发货配套。总装分厂未按要求执行，导致9月20日仍未发货配套，严重影响交期。扣2分。",
       "year": 2026,
-      "month": 7,
-      "time": "2026-07-30T03:28:01.340Z"
+      "month": 9,
+      "time": "2026-09-21T00:07:10.090Z"
+    },
+    {
+      "id": "b7",
+      "unitId": "zz",
+      "score": 1,
+      "reason": "开封70台面漆，因招标晚，导致油漆回厂影响使用。9月10日需要喷面漆，截至9月12日下午面漆才回厂，影响结构件喷漆发货。",
+      "year": 2026,
+      "month": 9,
+      "time": "2026-09-21T00:16:32.977Z"
     }
   ],
-  "_updatedAt": 1790651740087
+  "_dataVersion": 3
 }
