@@ -1,0 +1,2398 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>平煤机生产绩效考核负分交易系统</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--primary:#1a4f8b;--primary-light:#2a6faf;--danger:#e74c3c;--success:#27ae60;--warning:#f39c12;--bg:#f0f2f5;--card:#fff;--text:#333;--text-secondary:#666;--text-light:#999;--border:#e8e8e8;--radius:12px;--shadow:0 2px 12px rgba(0,0,0,.08)}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;max-width:480px;margin:0 auto;min-height:100vh;position:relative}
+.screen{display:none;padding:16px;padding-bottom:80px}
+.screen.active{display:block}
+.header{background:var(--primary);color:#fff;padding:16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.header h1{font-size:18px;font-weight:600}
+.header .back{width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:22px}
+.header .right-btn{font-size:14px;cursor:pointer;padding:6px 12px;border-radius:6px;background:rgba(255,255,255,.15)}
+.card{background:var(--card);border-radius:var(--radius);padding:16px;margin-bottom:12px;box-shadow:var(--shadow)}
+.card-title{font-size:16px;font-weight:600;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.stat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:16px}
+.stat-card{background:var(--card);border-radius:var(--radius);padding:14px;text-align:center;box-shadow:var(--shadow)}
+.stat-card .num{font-size:28px;font-weight:700;color:var(--primary)}
+.stat-card .label{font-size:12px;color:var(--text-secondary);margin-top:4px}
+.stat-card.danger .num{color:var(--danger)}
+.stat-card.warning .num{color:var(--warning)}
+.stat-card.success .num{color:var(--success)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:4px;padding:10px 20px;border-radius:8px;font-size:15px;font-weight:500;cursor:pointer;border:none;transition:all .2s}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-primary:hover{background:var(--primary-light)}
+.btn-danger{background:var(--danger);color:#fff}
+.btn-success{background:var(--success);color:#fff}
+.btn-warning{background:var(--warning);color:#fff}
+.btn-outline{background:transparent;border:1.5px solid var(--primary);color:var(--primary)}
+.btn-block{display:flex;width:100%}
+.btn-sm{padding:6px 14px;font-size:13px}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn-group{display:flex;gap:10px;margin-top:12px}
+.tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500}
+.tag-red{background:#fde8e8;color:var(--danger)}
+.tag-green{background:#def7ec;color:var(--success)}
+.tag-blue{background:#e1effe;color:var(--primary)}
+.tag-orange{background:#fef3c7;color:var(--warning)}
+.tag-gray{background:#f3f4f6;color:var(--text-secondary)}
+.list-item{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--border)}
+.list-item:last-child{border-bottom:none}
+.list-item .info{flex:1;min-width:0}
+.list-item .title{font-size:15px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.list-item .sub{font-size:13px;color:var(--text-secondary);margin-top:2px}
+.list-item .extra{text-align:right;margin-left:12px;flex-shrink:0}
+.list-item .score{font-size:22px;font-weight:700;color:var(--primary)}
+.list-item .score.low{color:var(--danger)}
+.list-item .score.mid{color:var(--warning)}
+.list-item .arrow{color:var(--text-light);font-size:20px;margin-left:8px}
+.form-group{margin-bottom:14px}
+.form-group label{display:block;font-size:14px;font-weight:500;margin-bottom:6px;color:var(--text)}
+.form-group .required{color:var(--danger);margin-left:2px}
+.form-input,.form-select,.form-textarea{width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:15px;font-family:inherit;background:#fff;transition:border-color .2s}
+.form-input:focus,.form-select:focus,.form-textarea:focus{outline:none;border-color:var(--primary)}
+.form-textarea{resize:vertical;min-height:80px}
+.form-select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23666' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px}
+.empty{text-align:center;padding:40px 20px;color:var(--text-light)}
+.empty .icon{font-size:48px;margin-bottom:12px}
+.alert{padding:12px 16px;border-radius:8px;font-size:14px;margin-bottom:12px}
+.alert-info{background:#e1effe;color:var(--primary)}
+.alert-warning{background:#fef3c7;color:#92400e}
+.alert-danger{background:#fde8e8;color:var(--danger)}
+.alert-success{background:#def7ec;color:var(--success)}
+.tabs{display:flex;gap:0;margin-bottom:16px;background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
+.tab{flex:1;text-align:center;padding:12px 0;font-size:14px;cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;color:var(--text-secondary)}
+.tab.active{border-bottom-color:var(--primary);color:var(--primary);font-weight:600}
+.chip{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:20px;font-size:13px;background:#f3f4f6;color:var(--text-secondary)}
+.chip.active{background:var(--primary);color:#fff}
+.picker{position:relative}
+.picker-value{padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:15px;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+.picker-dropdown{position:absolute;top:100%;left:0;right:0;background:#fff;border:1px solid var(--border);border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,.12);z-index:10;max-height:200px;overflow-y:auto;display:none}
+.picker-dropdown.show{display:block}
+.picker-option{padding:10px 12px;cursor:pointer;border-bottom:1px solid var(--border)}
+.picker-option:last-child{border-bottom:none}
+.picker-option:hover{background:#f0f2f5}
+.picker-option.selected{background:#e1effe;color:var(--primary);font-weight:600}
+.role-card{border:2px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:10px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:12px}
+.role-card.selected{border-color:var(--primary);background:#f0f7ff}
+.role-card .icon-circle{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.role-card .icon-circle.admin{background:#fde8e8;color:var(--danger)}
+.role-card .icon-circle.unit{background:#e1effe;color:var(--primary)}
+.role-card .icon-circle.expert{background:#def7ec;color:var(--success)}
+.user-select-card{border:1.5px solid var(--border);border-radius:8px;padding:12px;margin-bottom:8px;cursor:pointer;transition:all .2s}
+.user-select-card.selected{border-color:var(--primary);background:#f0f7ff}
+.user-select-card .name{font-weight:500;font-size:15px}
+.user-select-card .desc{font-size:13px;color:var(--text-secondary)}
+.vote-result{margin-top:12px;padding:12px;background:#f9fafb;border-radius:8px}
+.vote-bar{display:flex;height:24px;border-radius:12px;overflow:hidden;margin:8px 0}
+.vote-agree{background:var(--success);display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;transition:width .3s}
+.vote-disagree{background:var(--danger);display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;transition:width .3s}
+.vote-info{display:flex;justify-content:space-between;font-size:13px;color:var(--text-secondary)}
+.modal{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;z-index:200;display:none}
+.modal.show{display:flex}
+.modal-content{background:#fff;border-radius:var(--radius);padding:24px;width:90%;max-width:400px;max-height:80vh;overflow-y:auto}
+.modal-title{font-size:18px;font-weight:600;margin-bottom:16px}
+.quarterly-card{padding:16px;margin-bottom:10px}
+.quarterly-card .months{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0}
+.quarterly-card .month-item{text-align:center;padding:8px;background:#f9fafb;border-radius:6px}
+.quarterly-card .month-item .m-score{font-size:20px;font-weight:700;color:var(--primary)}
+.quarterly-card .month-item .m-label{font-size:11px;color:var(--text-light)}
+.quarterly-card .result{text-align:center;padding:12px;background:var(--primary);color:#fff;border-radius:8px;margin-top:8px}
+.quarterly-card .result .big{font-size:32px;font-weight:700}
+.quarterly-card .result .small{font-size:12px;opacity:.8}
+.toast{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.8);color:#fff;padding:10px 24px;border-radius:8px;font-size:14px;z-index:300;display:none;white-space:nowrap}
+.toast.show{display:block;animation:fadeIn .2s}
+@keyframes fadeIn{from{opacity:0;transform:translateX(-50%) translateY(-10px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+.navbar{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:#fff;display:flex;border-top:1px solid var(--border);z-index:100;box-shadow:0 -2px 8px rgba(0,0,0,.05)}
+.nav-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8px 0;font-size:11px;color:var(--text-light);cursor:pointer;transition:color .2s}
+.nav-item.active{color:var(--primary)}
+.nav-item .nav-icon{font-size:20px;margin-bottom:2px}
+.badge{position:relative}
+.badge::after{content:attr(data-count);position:absolute;top:-4px;right:-8px;background:var(--danger);color:#fff;font-size:10px;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.section-title{font-size:16px;font-weight:600;margin:20px 0 12px;padding-bottom:8px;border-bottom:2px solid var(--primary)}
+.deduction-item{padding:12px;background:#f9fafb;border-radius:8px;margin-bottom:8px;border-left:3px solid var(--danger)}
+.deduction-item .d-title{font-weight:500;margin-bottom:4px}
+.deduction-item .d-meta{font-size:12px;color:var(--text-light)}
+.deduction-item .d-score{font-size:18px;font-weight:700;color:var(--danger)}
+.expert-assign-card{border:1.5px solid var(--border);border-radius:8px;padding:12px;margin-bottom:8px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:10px}
+.expert-assign-card.selected{border-color:var(--success);background:#def7ec}
+.expert-assign-card .check-circle{width:22px;height:22px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px;color:#fff}
+.expert-assign-card.selected .check-circle{border-color:var(--success);background:var(--success)}
+.assigned-expert-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.assigned-expert-tag{background:var(--primary);color:#fff;padding:2px 10px;border-radius:20px;font-size:12px}
+.assigned-expert-tag.unvoted{background:var(--text-light)}
+/* Sync styles */
+.sync-status-bar{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;font-size:13px;margin-bottom:12px}
+.sync-status-bar.synced{background:#def7ec;color:var(--success)}
+.sync-status-bar.syncing{background:#fef3c7;color:#92400e}
+.sync-status-bar.error{background:#fde8e8;color:var(--danger)}
+.sync-status-bar.unconfigured{background:#f3f4f6;color:var(--text-light)}
+.sync-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.sync-status-bar.synced .sync-dot{background:var(--success)}
+.sync-status-bar.syncing .sync-dot{background:var(--warning);animation:pulse 1s infinite}
+.sync-status-bar.error .sync-dot{background:var(--danger)}
+.sync-status-bar.unconfigured .sync-dot{background:var(--text-light)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.sync-hint{font-size:12px;color:var(--text-light);margin-top:4px}
+.token-masked{font-family:monospace;letter-spacing:2px}
+</style>
+</head>
+<body>
+
+<div id="toast" class="toast"></div>
+
+<!-- ======================== LOGIN SCREEN ======================== -->
+<div id="screen-login" class="screen active">
+  <div style="text-align:center;padding:40px 0 24px">
+    <img src="logo.png" style="width:64px;height:64px;margin-bottom:12px;object-fit:contain" alt="平煤机">
+    <h2 style="font-size:22px;color:var(--primary)">平煤机生产绩效考核负分交易系统</h2>
+    <p style="color:var(--text-secondary);font-size:14px;margin-top:4px">请选择身份登录</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">选择角色</div>
+    <div id="role-options"></div>
+  </div>
+
+  <div id="unit-selector" class="card" style="display:none">
+    <div class="card-title">选择单位</div>
+    <select class="form-select" id="select-unit"><option value="">请选择单位</option></select>
+  </div>
+
+  <div id="user-selector" class="card" style="display:none">
+    <div class="card-title">选择账号</div>
+    <div id="user-options"></div>
+  </div>
+
+  <div id="pwd-area" class="card" style="display:none">
+    <div class="card-title">输入密码</div>
+    <input class="form-input" type="password" id="login-password" placeholder="请输入4位数字密码" maxlength="4" pattern="[0-9]{4}" inputmode="numeric" style="text-align:center;font-size:24px;letter-spacing:12px">
+  </div>
+  <div id="login-btn-area" style="display:none;margin-top:16px">
+    <button class="btn btn-primary btn-block" onclick="doLogin()">登录进入系统</button>
+  </div>
+</div>
+
+<!-- ======================== DASHBOARD SCREEN ======================== -->
+<div id="screen-dashboard" class="screen">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+    <div>
+      <div style="font-size:20px;font-weight:700" id="dash-greeting">欢迎</div>
+      <div style="font-size:13px;color:var(--text-light);margin-top:2px" id="dash-role-tag"></div>
+    </div>
+    <button class="btn btn-outline btn-sm" onclick="doLogout()">退出</button>
+  </div>
+
+  <!-- Cloud sync status bar -->
+  <div id="sync-status-bar" class="sync-status-bar unconfigured" style="display:none">
+    <div class="sync-dot"></div>
+    <span id="sync-status-text">云端同步未配置</span>
+  </div>
+
+  <div class="stat-grid" id="stat-grid">
+    <div class="stat-card"><div class="num" id="stat-score">--</div><div class="label" id="stat-label1">本月得分</div></div>
+    <div class="stat-card warning"><div class="num" id="stat-qscore">--</div><div class="label" id="stat-label2">季度考核分</div></div>
+    <div class="stat-card" id="stat-card3" style="display:none"><div class="num" id="stat-score3">--</div><div class="label" id="stat-label3"></div></div>
+  </div>
+
+    <div id="admin-dash" style="display:none">
+      <div class="card">
+        <div class="card-title">⚡ 快捷操作</div>
+        <div class="btn-group" style="flex-wrap:wrap">
+          <button class="btn btn-primary" onclick="navTo('deduction-create')">➖ 新建扣分</button>
+          <button class="btn btn-primary" onclick="navTo('bonus-create')" style="background:var(--primary);opacity:.85">🌟 新增加分</button>
+          <button class="btn btn-outline" onclick="navTo('members')">👥 人员管理</button>
+        </div>
+      </div>
+      <!-- Cloud Sync Settings Card -->
+      <div class="card" id="sync-settings-card">
+        <div class="card-title">☁️ 云端数据同步 <span id="sync-badge" class="tag tag-gray" style="margin-left:8px">未启用</span></div>
+        <div style="font-size:13px;color:var(--text-secondary);margin-bottom:12px">
+          启用后数据将自动同步到 GitHub，更换设备登录后自动获取最新数据。
+        </div>
+        <div id="sync-config-area">
+          <div class="form-group">
+            <label>GitHub Token <span class="required">*</span></label>
+            <input class="form-input" type="password" id="sync-token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
+            <div class="sync-hint">
+              创建方式：GitHub → Settings → Developer settings → Personal access tokens → Tokens (classic)<br>
+              权限只需勾选 <b>repo</b> 即可。
+            </div>
+          </div>
+          <div class="btn-group">
+            <button class="btn btn-primary btn-block" onclick="enableSync()" id="sync-enable-btn">☁️ 启用云端同步</button>
+          </div>
+        </div>
+        <div id="sync-info-area" style="display:none">
+          <div style="font-size:13px;color:var(--text-secondary);margin-bottom:8px">
+            状态：<span id="sync-info-status" style="font-weight:600">已启用</span>
+          </div>
+          <div style="font-size:13px;color:var(--text-light);margin-bottom:8px">
+            Token：<span class="token-masked" id="sync-info-token">****</span>
+          </div>
+          <div style="font-size:13px;color:var(--text-light);margin-bottom:12px" id="sync-info-time"></div>
+          <div class="btn-group" style="flex-wrap:wrap">
+            <button class="btn btn-outline" onclick="syncNow()" id="sync-now-btn">🔄 立即同步</button>
+            <button class="btn btn-outline" onclick="disableSync()" style="color:var(--danger);border-color:var(--danger)">停用同步</button>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">🔧 数据备份（本地）</div>
+        <div style="margin-bottom:8px;font-size:13px;color:var(--text-secondary)">本地备份作为额外保障，不受云端同步影响。</div>
+        <div class="btn-group">
+          <button class="btn btn-outline btn-block" onclick="exportData()">📥 导出数据备份</button>
+          <button class="btn btn-outline btn-block" onclick="document.getElementById('import-file-input').click()">📤 导入数据恢复</button>
+        </div>
+        <input type="file" id="import-file-input" accept=".json" style="display:none" onchange="importData(this)">
+      </div>
+    <div id="admin-appeal-reminder" class="alert alert-warning" style="display:none;cursor:pointer" onclick="navTo('appeal-list')"></div>
+  </div>
+
+  <div id="unit-dash" style="display:none">
+    <div class="card">
+      <div class="card-title">📋 本月扣分明细</div>
+      <div id="unit-deductions"></div>
+    </div>
+    <button class="btn btn-warning btn-block" onclick="navTo('appeal-create')">📢 发起申诉</button>
+  </div>
+
+  <div id="expert-dash" style="display:none">
+    <div id="expert-appeal-reminder" class="alert alert-warning" style="display:none;cursor:pointer" onclick="navTo('appeal-list')"></div>
+    <div class="card">
+      <div class="card-title">📊 我的评议统计</div>
+      <div style="text-align:center;padding:12px">
+        <span style="font-size:36px;font-weight:700;color:var(--primary)" id="expert-voted">0</span>
+        <span style="color:var(--text-secondary)"> 条已评议</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📊 数据入口</div>
+    <div class="list-item" onclick="navTo('monthly-score')">
+      <div class="info"><div class="title">月度评分</div><div class="sub">查看各单位每月得分</div></div>
+      <div class="arrow">›</div>
+    </div>
+    <div class="list-item" onclick="navTo('quarterly-score')">
+      <div class="info"><div class="title">季度评分</div><div class="sub">季度均分统计</div></div>
+      <div class="arrow">›</div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================== MONTHLY SCORES SCREEN ======================== -->
+<div id="screen-monthly-score" class="screen">
+  <div class="header"><span class="back" onclick="navTo('dashboard')">←</span><h1>月度评分</h1><span></span></div>
+  <div class="card" style="display:flex;align-items:center;justify-content:space-between;padding:10px 16px">
+    <span style="font-size:18px;cursor:pointer;user-select:none" onclick="changeScoreYear(-1)">◀</span>
+    <span style="font-weight:600;font-size:16px" id="ms-year-label">2026年</span>
+    <span style="font-size:18px;cursor:pointer;user-select:none" onclick="changeScoreYear(1)">▶</span>
+  </div>
+  <div id="month-tabs" class="tabs" style="display:grid;grid-template-columns:repeat(4,1fr);gap:4px;background:transparent;box-shadow:none;margin-bottom:8px"></div>
+  <div id="monthly-score-list"></div>
+</div>
+
+<!-- ======================== MONTHLY DETAIL SCREEN ======================== -->
+<div id="screen-monthly-detail" class="screen">
+  <div class="header"><span class="back" onclick="navTo('monthly-score')">←</span><h1 id="md-title">月度详情</h1><span></span></div>
+  <div class="card" style="text-align:center">
+    <div style="font-size:48px;font-weight:700;color:var(--primary)" id="md-score">--</div>
+    <div style="color:var(--text-secondary);font-size:14px">月度得分（满分30）</div>
+    <div style="margin-top:8px;font-size:13px;color:var(--text-light)">总扣分: <span id="md-total-deduct" style="color:var(--danger);font-weight:600">0</span><span id="md-bonus-info"></span></div>
+  </div>
+  <div class="section-title">扣分明细</div>
+  <div id="md-deduction-list"></div>
+</div>
+
+<!-- ======================== QUARTERLY SCORES SCREEN ======================== -->
+<div id="screen-quarterly-score" class="screen">
+  <div class="header"><span class="back" onclick="navTo('dashboard')">←</span><h1>季度评分</h1><span></span></div>
+  <div class="card" style="display:flex;align-items:center;justify-content:space-between;padding:10px 16px">
+    <span style="font-size:18px;cursor:pointer;user-select:none" onclick="changeQuarterYear(-1)">◀</span>
+    <span style="font-weight:600;font-size:16px" id="qs-year-label">2026年</span>
+    <span style="font-size:18px;cursor:pointer;user-select:none" onclick="changeQuarterYear(1)">▶</span>
+  </div>
+  <div id="quarter-tabs" class="tabs" style="display:grid;grid-template-columns:repeat(4,1fr);gap:4px;background:transparent;box-shadow:none;margin-bottom:8px"></div>
+  <div id="quarterly-score-list"></div>
+</div>
+
+<!-- ======================== QUARTERLY DETAIL SCREEN ======================== -->
+<div id="screen-quarterly-detail" class="screen">
+  <div class="header"><span class="back" onclick="navTo('quarterly-score')">←</span><h1 id="qd-title">季度详情</h1><span></span></div>
+  <div id="qd-content"></div>
+</div>
+
+<!-- ======================== DEDUCTION LIST SCREEN ======================== -->
+<div id="screen-deduction-list" class="screen">
+  <div class="header"><span class="back" onclick="navTo('dashboard')">←</span><h1>扣分管理</h1><span class="right-btn" id="dl-create-btn" onclick="navTo('deduction-create')">新建</span></div>
+  <div class="tabs">
+    <div class="tab active" onclick="switchDeductionTab('all')">全部</div>
+    <div class="tab" onclick="switchDeductionTab('mine')">本单位</div>
+  </div>
+  <div id="deduction-list-content"></div>
+</div>
+
+<!-- ======================== DEDUCTION CREATE SCREEN ======================== -->
+<div id="screen-deduction-create" class="screen">
+  <div class="header"><span class="back" onclick="navTo('deduction-list')">←</span><h1>新建扣分</h1><span></span></div>
+  <div class="card">
+    <div class="form-group"><label>被扣分单位 <span class="required">*</span></label><select class="form-select" id="dc-unit"></select></div>
+    <div class="form-group"><label>扣分值 <span class="required">*</span></label><input class="form-input" type="number" id="dc-score" placeholder="请输入扣分值" min="0.1" max="30" step="0.1"></div>
+    <div class="form-group"><label>扣分原因 <span class="required">*</span></label><textarea class="form-textarea" id="dc-reason" placeholder="请填写具体扣分原因"></textarea></div>
+    <div class="form-group"><label>考核月份</label><input class="form-input" type="month" id="dc-month"></div>
+    <button class="btn btn-primary btn-block" onclick="createDeduction()">提交扣分</button>
+  </div>
+</div>
+
+<!-- ======================== DEDUCTION DETAIL SCREEN ======================== -->
+<div id="screen-deduction-detail" class="screen">
+  <div class="header"><span class="back" onclick="navTo('deduction-list')">←</span><h1>扣分详情</h1><span></span></div>
+  <div id="dd-content"></div>
+</div>
+
+<!-- ======================== BONUS LIST SCREEN ======================== -->
+<div id="screen-bonus-list" class="screen">
+  <div class="header"><span class="back" onclick="navTo('dashboard')">←</span><h1>加分管理</h1><span class="right-btn" id="bl-create-btn" onclick="navTo('bonus-create')">新建</span></div>
+  <div class="tabs">
+    <div class="tab active" onclick="switchBonusTab('all')">全部</div>
+    <div class="tab" onclick="switchBonusTab('mine')">本单位</div>
+  </div>
+  <div id="bonus-list-content"></div>
+</div>
+
+<!-- ======================== BONUS CREATE SCREEN ======================== -->
+<div id="screen-bonus-create" class="screen">
+  <div class="header"><span class="back" onclick="navTo('bonus-list')">←</span><h1>新增加分</h1><span></span></div>
+  <div class="card">
+    <div class="form-group"><label>加分单位 <span class="required">*</span></label><select class="form-select" id="bc-unit"></select></div>
+    <div class="form-group"><label>加分值 <span class="required">*</span></label><input class="form-input" type="number" id="bc-score" placeholder="请输入加分值（不超过剩余分数）" min="0.1" max="30" step="0.1"></div>
+    <div class="form-group"><label>加分原因 <span class="required">*</span></label><textarea class="form-textarea" id="bc-reason" placeholder="请填写具体加分原因"></textarea></div>
+    <div class="form-group"><label>考核月份</label><input class="form-input" type="month" id="bc-month"></div>
+    <button class="btn btn-primary btn-block" onclick="createBonus()">提交加分</button>
+  </div>
+</div>
+
+<!-- ======================== BONUS DETAIL SCREEN ======================== -->
+<div id="screen-bonus-detail" class="screen">
+  <div class="header"><span class="back" onclick="navTo('bonus-list')">←</span><h1>加分详情</h1><span></span></div>
+  <div id="bd-content"></div>
+</div>
+
+<!-- ======================== APPEAL LIST SCREEN ======================== -->
+<div id="screen-appeal-list" class="screen">
+  <div class="header"><span class="back" onclick="navTo('dashboard')">←</span><h1>申诉管理</h1><span></span></div>
+  <div class="tabs">
+    <div class="tab active" onclick="switchAppealTab('all')">全部</div>
+    <div class="tab" onclick="switchAppealTab('mine')">本单位</div>
+    <div class="tab" onclick="switchAppealTab('pending')">待评议</div>
+  </div>
+  <div id="appeal-list-content"></div>
+</div>
+
+<!-- ======================== APPEAL CREATE SCREEN ======================== -->
+<div id="screen-appeal-create" class="screen">
+  <div class="header"><span class="back" onclick="navTo('appeal-list')">←</span><h1>发起申诉</h1><span></span></div>
+  <div class="card">
+    <div class="form-group"><label>选择扣分记录 <span class="required">*</span></label><select class="form-select" id="ac-deduction" onchange="onAppealDeductionChange()"></select></div>
+    <div id="ac-deduction-info" class="alert alert-info" style="display:none"></div>
+    <div class="form-group"><label>申诉理由 <span class="required">*</span></label><textarea class="form-textarea" id="ac-reason" placeholder="请说明为什么要申诉这个扣分"></textarea></div>
+    <div class="form-group"><label>责任单位 <span class="required">*</span></label><select class="form-select" id="ac-responsible"></select></div>
+    <button class="btn btn-warning btn-block" onclick="createAppeal()">提交申诉</button>
+  </div>
+</div>
+
+<!-- ======================== APPEAL DETAIL SCREEN ======================== -->
+<div id="screen-appeal-detail" class="screen">
+  <div class="header"><span class="back" onclick="navTo('appeal-list')">←</span><h1>申诉详情</h1><span></span></div>
+  <div id="ad-content"></div>
+</div>
+
+<!-- ======================== MEMBERS SCREEN ======================== -->
+<div id="screen-members" class="screen">
+  <div class="header"><span class="back" onclick="navTo('dashboard')">←</span><h1>人员管理</h1><span class="right-btn" onclick="showAddMember()">添加</span></div>
+  <div class="tabs">
+    <div class="tab active" onclick="switchMemberTab('unit')">单位人员</div>
+    <div class="tab" onclick="switchMemberTab('expert')">专家库</div>
+    <div class="tab" onclick="switchMemberTab('admin')">管理员</div>
+  </div>
+  <div id="members-content"></div>
+</div>
+
+<!-- ======================== SET PASSWORD MODAL ======================== -->
+<div id="modal-set-pwd" class="modal">
+  <div class="modal-content">
+    <div class="modal-title">设置密码</div>
+    <div id="modal-pwd-user" style="font-weight:600;margin-bottom:12px;color:var(--primary)"></div>
+    <div class="form-group"><label>4位数字密码 <span class="required">*</span></label>
+      <input class="form-input" type="text" id="modal-pwd" placeholder="请输入4位数字" maxlength="4" pattern="[0-9]{4}" inputmode="numeric" style="text-align:center;font-size:24px;letter-spacing:12px">
+    </div>
+    <div class="btn-group">
+      <button class="btn btn-outline btn-block" onclick="hideModal('modal-set-pwd')">取消</button>
+      <button class="btn btn-primary btn-block" onclick="setUserPassword()">确认设置</button>
+    </div>
+  </div>
+</div>
+
+<!-- ======================== NAVBAR ======================== -->
+<div class="navbar" id="navbar" style="display:none">
+  <div class="nav-item active" onclick="navTo('dashboard')"><span class="nav-icon">🏠</span>首页</div>
+  <div class="nav-item" onclick="navTo('monthly-score')"><span class="nav-icon">📅</span>月度评分</div>
+  <div class="nav-item" onclick="navTo('quarterly-score')"><span class="nav-icon">📈</span>季度评分</div>
+  <div id="nav-deduction" class="nav-item" onclick="navTo('deduction-list')"><span class="nav-icon">📝</span>扣分</div>
+  <div id="nav-bonus" class="nav-item" onclick="navTo('bonus-list')"><span class="nav-icon">🌟</span>加分</div>
+  <div id="nav-appeal" class="nav-item badge" onclick="navTo('appeal-list')" data-count=""><span class="nav-icon">📢</span>申诉</div>
+</div>
+
+<!-- ======================== ADD MEMBER MODAL ======================== -->
+<div id="modal-add-member" class="modal">
+  <div class="modal-content">
+    <div class="modal-title">添加人员</div>
+    <div class="form-group"><label>角色</label><span id="modal-role-label" style="font-weight:600"></span></div>
+    <div id="modal-unit-group" class="form-group" style="display:none"><label>单位</label><select class="form-select" id="modal-unit"></select></div>
+    <div class="form-group"><label>姓名 <span class="required">*</span></label><input class="form-input" id="modal-name" placeholder="请输入姓名"></div>
+    <div class="form-group"><label>4位密码 <span class="required">*</span></label><input class="form-input" type="text" id="modal-pwd-add" placeholder="请输入4位数字密码" maxlength="4" pattern="[0-9]{4}" inputmode="numeric" style="text-align:center;font-size:20px;letter-spacing:8px"></div>
+    <div class="btn-group">
+      <button class="btn btn-outline btn-block" onclick="hideModal('modal-add-member')">取消</button>
+      <button class="btn btn-primary btn-block" onclick="addMember()">确认添加</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ==================== CONSTANTS ====================
+const APP_VERSION = '202608011017'; // 每次修改代码后更新此版本号
+const ROLES = { UNIT: 'unit', EXPERT: 'expert', ADMIN: 'admin' };
+const ROLE_NAMES = { unit: '单位人员', expert: '专家', admin: '管理员' };
+
+const UNITS = [
+  { id: 'jg', name: '结构件分厂' },
+  { id: 'xl', name: '下料分厂' },
+  { id: 'jjg', name: '机加工分厂' },
+  { id: 'zz', name: '总装分厂' },
+  { id: 'jjg2', name: '机加工二分厂' },
+  { id: 'sc', name: '市场部' },
+  { id: 'cg', name: '采购部' },
+  { id: 'js', name: '技术中心' },
+  { id: 'yy', name: '运营部' },
+  { id: 'zl', name: '质量管理部' },
+  { id: 'ah', name: '安环设备部' },
+  { id: 'scgl', name: '生产管理部' },
+  { id: 'hr', name: '恒锐分公司' },
+  { id: 'gys', name: '工艺所' },
+];
+
+const TOTAL_SCORE = 30; // 月度考核满分
+
+function getUnitName(id) { const u = UNITS.find(x => x.id === id); return u ? u.name : id; }
+function getQuarter(m) { return Math.ceil(m / 3); }
+function getQuarterMonths(q) { return [(q-1)*3+1, (q-1)*3+2, (q-1)*3+3]; }
+// 计算某单位某月的最终得分（扣分 + 加分）
+function calcMonthScore(store, unitId, year, month) {
+  const deduct = store.deductions.filter(d => d.unitId === unitId && d.year === year && d.month === month).reduce((s, d) => s + d.score, 0);
+  const bonus = store.bonuses.filter(b => b.unitId === unitId && b.year === year && b.month === month).reduce((s, b) => s + b.score, 0);
+  return { score: Math.min(TOTAL_SCORE, Math.max(0, TOTAL_SCORE - deduct + bonus)), deduct, bonus };
+}
+const now = new Date();
+const currentYear = now.getFullYear();
+const currentMonth = now.getMonth() + 1;
+const currentQuarter = getQuarter(currentMonth);
+
+// ==================== DATA STORE (localStorage) ====================
+function getStore() {
+  let d = localStorage.getItem('kpi_data');
+  if (d) {
+    const store = JSON.parse(d);
+    // migration: add password to users that don't have one
+    let migrated = false;
+    store.users.forEach(u => {
+      if (!u.password) { u.password = '0000'; migrated = true; }
+    });
+    store.appeals.forEach(a => {
+      if (!a.assignedExperts) { a.assignedExperts = []; migrated = true; }
+    });
+    // migration: add 恒锐分公司 user if missing
+    if (!store.users.find(u => u.id === 'u_hr')) {
+      store.users.push({ id: 'u_hr', name: '恒锐', role: ROLES.UNIT, unitId: 'hr', password: '0000' });
+      if (store.nextIds && store.nextIds.user) store.nextIds.user = Math.max(store.nextIds.user, 20);
+      migrated = true;
+    }
+    // migration: add 工艺所 user if missing
+    if (!store.users.find(u => u.id === 'u_gys')) {
+      store.users.push({ id: 'u_gys', name: '孙工艺', role: ROLES.UNIT, unitId: 'gys', password: '0000' });
+      if (store.nextIds && store.nextIds.user) store.nextIds.user = Math.max(store.nextIds.user, 21);
+      migrated = true;
+    }
+    if (!store._updatedAt) { store._updatedAt = Date.now(); migrated = true; }
+    // migration: clear all deductions and appeals (one-time data reset)
+    if (!store._dataCleared) {
+      store.deductions = [];
+      store.appeals = [];
+      store.nextIds.deduction = 1;
+      store.nextIds.appeal = 1;
+      store._dataCleared = true;
+      migrated = true;
+    }
+    // migration: add bonuses array and nextId if missing
+    if (!store.bonuses) {
+      store.bonuses = [];
+      if (!store.nextIds.bonus) store.nextIds.bonus = 1;
+      migrated = true;
+    }
+    // migration: remove old superAdmin flags
+    const hadSuperAdmin = store.users.some(u => u.superAdmin);
+    if (hadSuperAdmin) {
+      store.users.forEach(u => { delete u.superAdmin; });
+      migrated = true;
+    }
+    // migration: migrate old u_jx ID to u_admin
+    const oldJx = store.users.find(u => u.id === 'u_jx');
+    if (oldJx) {
+      const existingAdmin = store.users.find(u => u.id === 'u_admin');
+      if (!existingAdmin) {
+        oldJx.id = 'u_admin';
+      } else {
+        // both exist, remove the old u_jx entry
+        store.users = store.users.filter(u => u.id !== 'u_jx');
+      }
+      migrated = true;
+    }
+    // migration: ensure u_admin user exists and is named 姜喜
+    let uadmin = store.users.find(u => u.id === 'u_admin');
+    if (!uadmin) {
+      uadmin = { id: 'u_admin', name: '姜喜', role: ROLES.ADMIN, unitId: null, password: '0000' };
+      store.users.push(uadmin);
+      migrated = true;
+    }
+    if (uadmin.name !== '姜喜') {
+      uadmin.name = '姜喜';
+      migrated = true;
+    }
+    if (uadmin.role !== ROLES.ADMIN) {
+      uadmin.role = ROLES.ADMIN;
+      migrated = true;
+    }
+    // migration: ensure only u_admin has canManageSync
+    store.users.forEach(u => {
+      if (u.role === ROLES.ADMIN) {
+        if (u.id === 'u_admin') {
+          if (!u.canManageSync) { u.canManageSync = true; migrated = true; }
+        } else {
+          if (u.canManageSync) { delete u.canManageSync; migrated = true; }
+        }
+      }
+    });
+    if (migrated) saveStore(store);
+    return store;
+  }
+  return initStore();
+}
+
+function initStore() {
+  const data = {
+    users: [
+      { id: 'u_jg', name: '李结构件', role: ROLES.UNIT, unitId: 'jg', password: '0000' },
+      { id: 'u_xl', name: '王下料', role: ROLES.UNIT, unitId: 'xl', password: '0000' },
+      { id: 'u_jjg', name: '赵机加工', role: ROLES.UNIT, unitId: 'jjg', password: '0000' },
+      { id: 'u_zz', name: '陈总装', role: ROLES.UNIT, unitId: 'zz', password: '0000' },
+      { id: 'u_jjg2', name: '刘机二', role: ROLES.UNIT, unitId: 'jjg2', password: '0000' },
+      { id: 'u_sc', name: '周市场', role: ROLES.UNIT, unitId: 'sc', password: '0000' },
+      { id: 'u_cg', name: '吴采购', role: ROLES.UNIT, unitId: 'cg', password: '0000' },
+      { id: 'u_js', name: '郑技术', role: ROLES.UNIT, unitId: 'js', password: '0000' },
+      { id: 'u_yy', name: '冯运营', role: ROLES.UNIT, unitId: 'yy', password: '0000' },
+      { id: 'u_zl', name: '褚质量', role: ROLES.UNIT, unitId: 'zl', password: '0000' },
+      { id: 'u_ah', name: '卫安环', role: ROLES.UNIT, unitId: 'ah', password: '0000' },
+      { id: 'u_scgl', name: '蒋生产', role: ROLES.UNIT, unitId: 'scgl', password: '0000' },
+      { id: 'u_hr', name: '恒锐', role: ROLES.UNIT, unitId: 'hr', password: '0000' },
+      { id: 'u_gys', name: '孙工艺', role: ROLES.UNIT, unitId: 'gys', password: '0000' },
+      { id: 'u_exp1', name: '专家甲', role: ROLES.EXPERT, unitId: null, password: '0000' },
+      { id: 'u_exp2', name: '专家乙', role: ROLES.EXPERT, unitId: null, password: '0000' },
+      { id: 'u_exp3', name: '专家丙', role: ROLES.EXPERT, unitId: null, password: '0000' },
+      { id: 'u_exp4', name: '专家丁', role: ROLES.EXPERT, unitId: null, password: '0000' },
+      { id: 'u_exp5', name: '专家戊', role: ROLES.EXPERT, unitId: null, password: '0000' },
+      { id: 'u_admin', name: '姜喜', role: ROLES.ADMIN, unitId: null, password: '0000', canManageSync: true },
+    ],
+    deductions: [],
+    bonuses: [],
+    appeals: [],
+    nextIds: { deduction: 1, bonus: 1, appeal: 1, user: 20 },
+    _updatedAt: Date.now(),
+  };
+  saveStore(data);
+  return data;
+}
+
+let _lastLocalModify = 0; // 用户最后一次修改数据的时间戳
+
+function saveStore(data) {
+  data._updatedAt = Date.now();
+  _lastLocalModify = data._updatedAt; // 记录最后修改时间
+  localStorage.setItem('kpi_data', JSON.stringify(data));
+  // Auto cloud sync (async, non-blocking)
+  if (getSyncConfig().enabled) {
+    syncToCloudDebounced(data);
+  }
+}
+
+// ==================== CLOUD SYNC (GitHub API) ====================
+// Sync config — stored separately, NOT synced to cloud
+function getSyncConfig() {
+  try {
+    return JSON.parse(localStorage.getItem('kpi_sync_config') || '{}');
+  } catch(e) { return {}; }
+}
+
+function saveSyncConfig(config) {
+  localStorage.setItem('kpi_sync_config', JSON.stringify(config));
+}
+
+// Base64 encode/decode with Unicode support
+function base64Encode(str) {
+  const bytes = new TextEncoder().encode(str);
+  let binary = '';
+  bytes.forEach(b => binary += String.fromCharCode(b));
+  return btoa(binary);
+}
+
+function base64Decode(str) {
+  const binary = atob(str);
+  const bytes = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+  return new TextDecoder().decode(bytes);
+}
+
+// ==================== TOKEN ENCRYPTION (AES-GCM) ====================
+// Shared key derived from a passphrase — enables cross-device token sharing
+const _CRYPTO_PASSPHRASE = 'pmj_kpi_sync_2026_secure_key_v2';
+const _CRYPTO_SALT = new Uint8Array([0x50,0x4D,0x4A,0x5F,0x4B,0x50,0x49,0x5F,0x53,0x59,0x4E,0x43,0x5F,0x32,0x30,0x32]);
+
+async function _deriveKey() {
+  const enc = new TextEncoder();
+  const keyMaterial = await crypto.subtle.importKey('raw', enc.encode(_CRYPTO_PASSPHRASE), 'PBKDF2', false, ['deriveKey']);
+  return crypto.subtle.deriveKey(
+    { name: 'PBKDF2', salt: _CRYPTO_SALT, iterations: 100000, hash: 'SHA-256' },
+    keyMaterial,
+    { name: 'AES-GCM', length: 256 },
+    false,
+    ['encrypt', 'decrypt']
+  );
+}
+
+async function encryptToken(token) {
+  const key = await _deriveKey();
+  const iv = crypto.getRandomValues(new Uint8Array(12));
+  const enc = new TextEncoder();
+  const encrypted = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, key, enc.encode(token));
+  // Return IV + ciphertext as hex string
+  const combined = new Uint8Array(iv.length + encrypted.byteLength);
+  combined.set(iv);
+  combined.set(new Uint8Array(encrypted), iv.length);
+  return Array.from(combined).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+async function decryptToken(hexStr) {
+  if (!hexStr || hexStr.length < 24) return null;
+  const bytes = new Uint8Array(hexStr.match(/.{1,2}/g).map(b => parseInt(b, 16)));
+  const iv = bytes.slice(0, 12);
+  const ciphertext = bytes.slice(12);
+  try {
+    const key = await _deriveKey();
+    const decrypted = await crypto.subtle.decrypt({ name: 'AES-GCM', iv }, key, ciphertext);
+    return new TextDecoder().decode(decrypted);
+  } catch(e) { return null; }
+}
+
+let _syncTimer = null;
+let _syncing = false;
+
+function syncToCloudDebounced(data) {
+  // Debounce: wait 2 seconds after last change before syncing
+  clearTimeout(_syncTimer);
+  _syncTimer = setTimeout(() => _syncToCloud(data), 2000);
+}
+
+async function _syncToCloud(data) {
+  if (_syncing) return;
+  _syncing = true;
+  updateSyncUI('syncing', '同步中...');
+  try {
+    const config = getSyncConfig();
+    if (!config.token) throw new Error('未配置Token');
+
+    // Get current file sha from GitHub
+    let sha = null;
+    try {
+      const result = await githubAPI('data.json');
+      sha = result.sha;
+    } catch(e) {
+      // File doesn't exist yet, that's fine
+    }
+
+    // Keep _updatedAt in cloud data so other devices can compare timestamps
+    const cleanData = { ...data };
+    cleanData._updatedAt = data._updatedAt || Date.now();
+
+    // Include encrypted token in cloud data for cross-device sharing
+    if (config.token) {
+      cleanData._encToken = await encryptToken(config.token);
+    }
+
+    const content = base64Encode(JSON.stringify(cleanData, null, 2));
+    const body = { message: 'Auto-sync: ' + new Date().toLocaleString('zh-CN'), content };
+    if (sha) body.sha = sha;
+
+    await githubAPI('data.json', 'PUT', body);
+    config.lastSync = Date.now();
+    saveSyncConfig(config);
+    updateSyncUI('synced', '已同步 ' + new Date().toLocaleTimeString('zh-CN'));
+  } catch(e) {
+    console.error('Cloud sync failed:', e);
+    updateSyncUI('error', '同步失败: ' + (e.message || '未知错误'));
+  } finally {
+    _syncing = false;
+  }
+}
+
+async function pullFromCloud() {
+  try {
+    const result = await githubAPI('data.json');
+    const content = JSON.parse(base64Decode(result.content));
+    content._updatedAt = Date.now();
+    return { data: content, sha: result.sha };
+  } catch(e) {
+    if (e.message && (e.message.includes('404') || e.message.includes('Not Found'))) return null;
+    console.warn('Pull from cloud failed:', e);
+    throw e;
+  }
+}
+
+async function githubAPI(path, method, body) {
+  const config = getSyncConfig();
+  if (!config.token) throw new Error('未配置GitHub Token');
+
+  const url = 'https://api.github.com/repos/wag-ops/pmj/contents/' + path;
+  const options = {
+    method: method || 'GET',
+    headers: {
+      'Authorization': 'token ' + config.token,
+      'Accept': 'application/vnd.github.v3+json',
+    },
+  };
+  if (body) {
+    options.headers['Content-Type'] = 'application/json';
+    options.body = JSON.stringify(body);
+  }
+
+  const res = await fetch(url, options);
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.message || ('GitHub API HTTP ' + res.status));
+  }
+  return res.json();
+}
+
+function updateSyncUI(status, text) {
+  const bar = document.getElementById('sync-status-bar');
+  const statusText = document.getElementById('sync-status-text');
+  if (!bar || !statusText) return;
+
+  bar.className = 'sync-status-bar ' + status;
+  bar.style.display = '';
+  statusText.textContent = text || status;
+
+  // Also update the sync badge in settings card
+  const badge = document.getElementById('sync-badge');
+  if (badge) {
+    const config = getSyncConfig();
+    badge.textContent = config.enabled ? (status === 'synced' ? '已同步' : status === 'syncing' ? '同步中' : '已启用') : '未启用';
+    badge.className = 'tag ' + (config.enabled ? (status === 'error' ? 'tag-red' : 'tag-green') : 'tag-gray');
+  }
+}
+
+async function syncNow() {
+  const config = getSyncConfig();
+  if (!config.token) {
+    showToast('请先配置 GitHub Token');
+    return;
+  }
+  const btn = document.getElementById('sync-now-btn');
+  if (btn) btn.disabled = true;
+  showToast('正在同步...');
+
+  try {
+    // Pull from cloud first to get latest
+    updateSyncUI('syncing', '正在拉取云端数据...');
+    const cloudResult = await pullFromCloud();
+    const localData = getStore();
+    const localTime = localData._updatedAt || 0;
+
+    if (cloudResult) {
+      // 数据版本号优先：云端版本更高时，强制使用云端数据
+      const cloudVersion = cloudResult.data._dataVersion || 0;
+      const localVersion = localData._dataVersion || 0;
+      if (cloudVersion > localVersion || (cloudResult.data._updatedAt && cloudResult.data._updatedAt > localTime)) {
+        // Cloud is newer — use cloud data
+        saveStoreRaw(cloudResult.data);
+        showToast('已从云端加载最新数据');
+        updateSyncUI('synced', '已同步 ' + new Date().toLocaleTimeString('zh-CN'));
+        config.lastSync = Date.now();
+        saveSyncConfig(config);
+        // Re-render current screen
+        const renderFn = renderFunctions[currentScreen];
+        if (renderFn) renderFn();
+      } else {
+        // Local is newer or same — push to cloud
+        updateSyncUI('syncing', '正在上传本地数据...');
+        const cleanData = { ...localData };
+        cleanData._updatedAt = localData._updatedAt || Date.now();
+        if (config.token) cleanData._encToken = await encryptToken(config.token);
+        const content = base64Encode(JSON.stringify(cleanData, null, 2));
+        const body = {
+          message: 'Manual sync: ' + new Date().toLocaleString('zh-CN'),
+          content,
+          sha: cloudResult.sha,
+        };
+        await githubAPI('data.json', 'PUT', body);
+        showToast('数据已上传到云端');
+        updateSyncUI('synced', '已同步 ' + new Date().toLocaleTimeString('zh-CN'));
+        config.lastSync = Date.now();
+        saveSyncConfig(config);
+      }
+    } else {
+      // No cloud data — push local
+      updateSyncUI('syncing', '正在首次上传...');
+      const cleanData = { ...localData };
+      cleanData._updatedAt = localData._updatedAt || Date.now();
+      if (config.token) cleanData._encToken = await encryptToken(config.token);
+      const content = base64Encode(JSON.stringify(cleanData, null, 2));
+      const body = {
+        message: 'Initial sync: ' + new Date().toLocaleString('zh-CN'),
+        content,
+      };
+      await githubAPI('data.json', 'PUT', body);
+      showToast('首次同步成功！');
+      updateSyncUI('synced', '已同步 ' + new Date().toLocaleTimeString('zh-CN'));
+      config.lastSync = Date.now();
+      saveSyncConfig(config);
+    }
+  } catch(e) {
+    updateSyncUI('error', '同步失败: ' + (e.message || '未知错误'));
+    showToast('同步失败: ' + (e.message || '未知错误'));
+  } finally {
+    if (btn) btn.disabled = false;
+  }
+}
+
+function saveStoreRaw(data) {
+  // Save without triggering auto-sync (used when pulling from cloud)
+  localStorage.setItem('kpi_data', JSON.stringify(data));
+}
+
+function enableSync() {
+  const tokenInput = document.getElementById('sync-token');
+  const token = tokenInput.value.trim();
+  if (!token) { showToast('请输入 GitHub Token'); return; }
+  if (!token.startsWith('ghp_') && !token.startsWith('github_pat_')) {
+    showToast('Token 格式不正确，应以 ghp_ 或 github_pat_ 开头');
+    return;
+  }
+
+  const config = getSyncConfig();
+  config.token = token;
+  config.enabled = true;
+  config.lastSync = 0;
+  saveSyncConfig(config);
+
+  // Hide config area, show info area
+  document.getElementById('sync-config-area').style.display = 'none';
+  document.getElementById('sync-info-area').style.display = '';
+  document.getElementById('sync-info-status').textContent = '已启用';
+  document.getElementById('sync-info-token').textContent = token.substring(0, 4) + '****' + token.substring(token.length - 4);
+  document.getElementById('sync-badge').textContent = '已启用';
+  document.getElementById('sync-badge').className = 'tag tag-green';
+
+  updateSyncUI('unconfigured', '请在 Token 输入框中粘贴 GitHub Token 后点击"启用"');
+  showToast('云端同步已启用，正在首次同步...');
+
+  // Do initial sync
+  syncNow();
+}
+
+async function disableSync() {
+  if (!confirm('确定要停用云端数据同步吗？停用后数据将不会自动跨设备同步。')) return;
+
+  const config = getSyncConfig();
+
+  // Remove encrypted token from cloud data
+  try {
+    const result = await githubAPI('data.json');
+    const cloudData = JSON.parse(base64Decode(result.content));
+    delete cloudData._encToken;
+    const content = base64Encode(JSON.stringify(cloudData, null, 2));
+    await githubAPI('data.json', 'PUT', {
+      message: 'Disable cloud sync',
+      content,
+      sha: result.sha,
+    });
+  } catch(e) {
+    console.warn('Failed to clear cloud token:', e);
+  }
+
+  config.enabled = false;
+  config.token = ''; // Clear token for security
+  saveSyncConfig(config);
+
+  document.getElementById('sync-config-area').style.display = '';
+  document.getElementById('sync-info-area').style.display = 'none';
+  document.getElementById('sync-token').value = '';
+  document.getElementById('sync-badge').textContent = '未启用';
+  document.getElementById('sync-badge').className = 'tag tag-gray';
+
+  updateSyncUI('unconfigured', '云端同步已停用');
+  showToast('云端同步已停用');
+}
+
+function renderSyncSettings() {
+  const config = getSyncConfig();
+  if (config.enabled && config.token) {
+    document.getElementById('sync-config-area').style.display = 'none';
+    document.getElementById('sync-info-area').style.display = '';
+    document.getElementById('sync-info-status').textContent = '已启用';
+    document.getElementById('sync-info-token').textContent = config.token.substring(0, 4) + '****' + config.token.substring(config.token.length - 4);
+    if (config.lastSync) {
+      document.getElementById('sync-info-time').textContent = '上次同步：' + new Date(config.lastSync).toLocaleString('zh-CN');
+    } else {
+      document.getElementById('sync-info-time').textContent = '尚未同步';
+    }
+    document.getElementById('sync-badge').textContent = '已启用';
+    document.getElementById('sync-badge').className = 'tag tag-green';
+    updateSyncUI('synced', config.lastSync ? '已同步 ' + new Date(config.lastSync).toLocaleTimeString('zh-CN') : '已启用');
+  } else {
+    document.getElementById('sync-config-area').style.display = '';
+    document.getElementById('sync-info-area').style.display = 'none';
+    document.getElementById('sync-badge').textContent = '未启用';
+    document.getElementById('sync-badge').className = 'tag tag-gray';
+    updateSyncUI('unconfigured', '云端同步未启用 — 换设备后数据不会自动同步');
+  }
+}
+
+async function initCloudSync() {
+  const config = getSyncConfig();
+
+  // If no local token, try to recover from cloud (public raw URL)
+  if (!config.token) {
+    try {
+      const rawRes = await fetch('https://raw.githubusercontent.com/wag-ops/pmj/main/data.json');
+      if (rawRes.ok) {
+        const rawData = await rawRes.json();
+        if (rawData._encToken) {
+          const token = await decryptToken(rawData._encToken);
+          if (token) {
+            config.token = token;
+            config.enabled = true;
+            config.lastSync = 0;
+            saveSyncConfig(config);
+            console.log('Token recovered from cloud');
+          }
+        }
+      }
+    } catch(e) {
+      console.log('No cloud token available:', e.message);
+    }
+  }
+
+  if (!config.enabled || !config.token) {
+    // Sync not configured
+    document.getElementById('sync-status-bar').style.display = 'none';
+    return;
+  }
+
+  document.getElementById('sync-status-bar').style.display = '';
+  updateSyncUI('syncing', '正在检查云端数据...');
+
+  try {
+    const cloudResult = await pullFromCloud();
+    if (cloudResult) {
+      const hasLocal = !!localStorage.getItem('kpi_data');
+
+      if (!hasLocal) {
+        // New device — no local data, always use cloud as source of truth
+        saveStoreRaw(cloudResult.data);
+        updateSyncUI('synced', '已从云端加载数据');
+        config.lastSync = Date.now();
+        saveSyncConfig(config);
+        console.log('Fresh device: loaded cloud data');
+        return;
+      }
+
+      const localData = getStore();
+      const localTime = localData._updatedAt || 0;
+      const cloudTime = cloudResult.data._updatedAt || 0;
+
+      // 数据版本号检测：云端版本更高时，强制使用云端数据（防止旧设备覆盖清理后的数据）
+      const cloudVersion = cloudResult.data._dataVersion || 0;
+      const localVersion = localData._dataVersion || 0;
+
+      if (cloudVersion > localVersion || cloudTime > localTime) {
+        // Cloud is newer (by version or time) — use cloud data
+        saveStoreRaw(cloudResult.data);
+        updateSyncUI('synced', '已加载云端最新数据 ' + new Date().toLocaleTimeString('zh-CN'));
+        config.lastSync = Date.now();
+        saveSyncConfig(config);
+        console.log('Loaded newer data from cloud (v' + cloudVersion + ' > v' + localVersion + ')');
+      } else if (localTime > cloudTime) {
+        // Local is newer — push to cloud
+        updateSyncUI('syncing', '正在上传本地数据...');
+        const cleanData = { ...localData };
+        cleanData._updatedAt = localData._updatedAt || Date.now();
+        if (config.token) cleanData._encToken = await encryptToken(config.token);
+        const content = base64Encode(JSON.stringify(cleanData, null, 2));
+        const body = {
+          message: 'Auto-sync on startup: ' + new Date().toLocaleString('zh-CN'),
+          content,
+          sha: cloudResult.sha,
+        };
+        await githubAPI('data.json', 'PUT', body);
+        updateSyncUI('synced', '已同步 ' + new Date().toLocaleTimeString('zh-CN'));
+        config.lastSync = Date.now();
+        saveSyncConfig(config);
+      } else {
+        updateSyncUI('synced', '数据已是最新');
+      }
+    } else {
+      // No cloud data yet, push local
+      updateSyncUI('syncing', '首次上传...');
+      const localData = getStore();
+      const cleanData = { ...localData };
+      cleanData._updatedAt = localData._updatedAt || Date.now();
+      if (config.token) cleanData._encToken = await encryptToken(config.token);
+      const content = base64Encode(JSON.stringify(cleanData, null, 2));
+      const body = {
+        message: 'Initial sync: ' + new Date().toLocaleString('zh-CN'),
+        content,
+      };
+      await githubAPI('data.json', 'PUT', body);
+      updateSyncUI('synced', '首次同步完成');
+      config.lastSync = Date.now();
+      saveSyncConfig(config);
+    }
+  } catch(e) {
+    console.error('Cloud sync init failed:', e);
+    updateSyncUI('error', '同步失败，使用本地数据 · ' + (e.message || ''));
+  }
+
+  // 启动定时自动拉取（每30秒检查一次云端更新）
+  startAutoSyncInterval();
+}
+
+// ===== 定时自动同步：每30秒静默检查云端是否有更新 =====
+let _autoSyncInterval = null;
+
+function startAutoSyncInterval() {
+  stopAutoSyncInterval();
+  _autoSyncInterval = setInterval(autoPullFromCloud, 30000);
+}
+
+function stopAutoSyncInterval() {
+  if (_autoSyncInterval) {
+    clearInterval(_autoSyncInterval);
+    _autoSyncInterval = null;
+  }
+}
+
+async function autoPullFromCloud() {
+  const config = getSyncConfig();
+  if (!config.enabled || !config.token) return;
+
+  // 如果用户最近 5 秒内刚修改过数据，跳过拉取，避免覆盖用户编辑
+  if (_lastLocalModify && (Date.now() - _lastLocalModify < 5000)) {
+    // 用户刚刚修改过，不拉取；同时清除旧的防抖定时器，立即推送
+    clearTimeout(_syncTimer);
+    const localData = getStore();
+    if (!_syncing) _syncToCloud(localData);
+    return;
+  }
+
+  try {
+    const cloudResult = await pullFromCloud();
+    if (!cloudResult) return;
+
+    const localData = getStore();
+    const localTime = localData._updatedAt || 0;
+    const cloudTime = cloudResult.data._updatedAt || 0;
+    const cloudVersion = cloudResult.data._dataVersion || 0;
+    const localVersion = localData._dataVersion || 0;
+
+    if (cloudVersion > localVersion || cloudTime > localTime) {
+      // Cloud has newer data — update locally
+      saveStoreRaw(cloudResult.data);
+      updateSyncUI('synced', '自动同步 ' + new Date().toLocaleTimeString('zh-CN'));
+      config.lastSync = Date.now();
+      saveSyncConfig(config);
+
+      // 刷新当前页面视图
+      const renderFn = renderFunctions[currentScreen];
+      if (renderFn) renderFn();
+      console.log('Auto-sync: loaded newer data from cloud');
+    }
+  } catch(e) {
+    // 静默失败，不影响用户体验
+  }
+}
+
+// 页面关闭时清理定时器
+window.addEventListener('beforeunload', () => {
+  stopAutoSyncInterval();
+});
+
+// ==================== AUTH ====================
+function getCurrentUser() {
+  const u = localStorage.getItem('kpi_currentUser');
+  return u ? JSON.parse(u) : null;
+}
+function getRole() {
+  const u = getCurrentUser();
+  return u ? u.role : null;
+}
+function setCurrentUser(user) {
+  localStorage.setItem('kpi_currentUser', JSON.stringify(user));
+}
+function doLogout() {
+  if (confirm('确定退出登录吗？')) {
+    localStorage.removeItem('kpi_currentUser');
+    showScreen('login');
+  }
+}
+
+// ==================== NAVIGATION ====================
+const NOT_AUTH_SCREENS = ['login'];
+let currentScreen = 'login';
+let dedTab = 'all', appealTab = 'all', bonusTab = 'all', memberTab = 'unit';
+let scoreYear = currentYear, scoreMonth = currentMonth;
+let quarterYear = currentYear, quarterQuarter = currentQuarter;
+
+function changeScoreYear(delta) {
+  scoreYear += delta;
+  renderMonthlyScore();
+}
+
+function selectMonth(m) {
+  scoreMonth = m;
+  renderMonthlyScore();
+}
+
+function changeQuarterYear(delta) {
+  quarterYear += delta;
+  renderQuarterlyScore();
+}
+
+function selectQuarter(q) {
+  quarterQuarter = q;
+  renderQuarterlyScore();
+}
+
+function showScreen(name) {
+  if (!NOT_AUTH_SCREENS.includes(name) && !getCurrentUser()) {
+    showScreen('login');
+    return;
+  }
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  const el = document.getElementById('screen-' + name);
+  if (el) el.classList.add('active');
+  currentScreen = name;
+
+  // navbar
+  const nav = document.getElementById('navbar');
+  const mainScreens = ['dashboard','monthly-score','quarterly-score','deduction-list','bonus-list','appeal-list'];
+  nav.style.display = mainScreens.includes(name) ? 'flex' : 'none';
+  document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+  const navMap = { dashboard: 0, 'monthly-score': 1, 'quarterly-score': 2, 'deduction-list': 3, 'bonus-list': 4, 'appeal-list': 5 };
+  if (navMap[name] !== undefined) {
+    document.querySelectorAll('.nav-item')[navMap[name]].classList.add('active');
+  }
+
+  // hide admin-only elements
+  const role = getRole();
+  document.getElementById('nav-deduction').style.display = (role === ROLES.ADMIN) ? '' : 'none';
+  document.getElementById('nav-bonus').style.display = (role === ROLES.ADMIN) ? '' : 'none';
+
+  // render screen
+  renderFunctions[name] && renderFunctions[name]();
+}
+
+function navTo(name, params) {
+  navParams = params || {};
+  showScreen(name);
+}
+
+let navParams = {};
+const renderFunctions = {
+  'login': renderLogin,
+  'dashboard': renderDashboard,
+  'monthly-score': renderMonthlyScore,
+  'monthly-detail': renderMonthlyDetail,
+  'quarterly-score': renderQuarterlyScore,
+  'quarterly-detail': renderQuarterlyDetail,
+  'deduction-list': renderDeductionList,
+  'deduction-create': renderDeductionCreate,
+  'deduction-detail': renderDeductionDetail,
+  'bonus-list': renderBonusList,
+  'bonus-create': renderBonusCreate,
+  'bonus-detail': renderBonusDetail,
+  'appeal-list': renderAppealList,
+  'appeal-create': renderAppealCreate,
+  'appeal-detail': renderAppealDetail,
+  'members': renderMembers,
+};
+
+// ==================== TOAST ====================
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+// ==================== MODAL ====================
+function showModal(id) { document.getElementById(id).classList.add('show'); }
+function hideModal(id) { document.getElementById(id).classList.remove('show'); }
+
+// ==================== LOGIN ====================
+let loginRole = '', loginUnit = '', loginUser = '';
+
+function renderLogin() {
+  const store = getStore();
+  // role options
+  const roles = [
+    { value: ROLES.ADMIN, name: '管理员', desc: '操作扣分，管理全部数据', icon: 'admin', emoji: '🔧' },
+    { value: ROLES.UNIT, name: '单位人员', desc: '查看本单位分值，有权发起申诉', icon: 'unit', emoji: '🏭' },
+    { value: ROLES.EXPERT, name: '专家', desc: '参与申诉评议投票', icon: 'expert', emoji: '🎓' },
+  ];
+  let roleHtml = '';
+  roles.forEach(r => {
+    const sel = loginRole === r.value ? ' selected' : '';
+    roleHtml += `<div class="role-card${sel}" onclick="selectRole('${r.value}')">
+      <div class="icon-circle ${r.icon}">${r.emoji}</div>
+      <div><div style="font-weight:600">${r.name}</div><div style="font-size:13px;color:var(--text-secondary)">${r.desc}</div></div>
+    </div>`;
+  });
+  document.getElementById('role-options').innerHTML = roleHtml;
+
+  document.getElementById('unit-selector').style.display = loginRole === ROLES.UNIT ? '' : 'none';
+  document.getElementById('user-selector').style.display = '';
+
+  // unit selector
+  if (loginRole === ROLES.UNIT) {
+    let uhtml = '<option value="">请选择单位</option>';
+    UNITS.forEach(u => uhtml += `<option value="${u.id}" ${loginUnit===u.id?'selected':''}>${u.name}</option>`);
+    document.getElementById('select-unit').innerHTML = uhtml;
+    document.getElementById('select-unit').onchange = function() {
+      loginUnit = this.value; loginUser = '';
+      renderLogin();
+    };
+  }
+
+  // user options
+  let users = [];
+  if (loginRole === ROLES.UNIT && loginUnit) users = store.users.filter(u => u.role === ROLES.UNIT && u.unitId === loginUnit);
+  else if (loginRole === ROLES.EXPERT) users = store.users.filter(u => u.role === ROLES.EXPERT);
+  else if (loginRole === ROLES.ADMIN) users = store.users.filter(u => u.role === ROLES.ADMIN);
+
+  let uhtml = '';
+  if (users.length === 0) uhtml = '<div class="empty"><div class="icon">📭</div>暂无可用账号</div>';
+  users.forEach(u => {
+    const sel = loginUser === u.id ? ' selected' : '';
+    uhtml += `<div class="user-select-card${sel}" onclick="selectUser('${u.id}')">
+      <div class="name">${u.name}</div>
+      <div class="desc">${ROLE_NAMES[u.role]}${u.unitId ? ' · ' + getUnitName(u.unitId) : ''}</div>
+    </div>`;
+  });
+  document.getElementById('user-options').innerHTML = uhtml;
+
+  // password area
+  const pwdArea = document.getElementById('pwd-area');
+  const loginBtn = document.getElementById('login-btn-area');
+  if (loginUser) {
+    pwdArea.style.display = '';
+    loginBtn.style.display = '';
+  } else {
+    pwdArea.style.display = 'none';
+    loginBtn.style.display = 'none';
+    document.getElementById('login-password').value = '';
+  }
+}
+
+function selectRole(r) { loginRole = r; loginUnit = ''; loginUser = ''; renderLogin(); }
+function selectUser(id) { loginUser = id; renderLogin(); }
+
+function doLogin() {
+  if (!loginRole) { showToast('请选择角色'); return; }
+  if (loginRole === ROLES.UNIT && !loginUnit) { showToast('请选择单位'); return; }
+  if (!loginUser) { showToast('请选择账号'); return; }
+  const pwd = document.getElementById('login-password').value;
+  if (!pwd) { showToast('请输入密码'); return; }
+  if (pwd.length !== 4 || !/^\d{4}$/.test(pwd)) { showToast('密码为4位数字'); return; }
+  const store = getStore();
+  const user = store.users.find(u => u.id === loginUser);
+  if (!user) { showToast('账号不存在'); return; }
+  if (user.password !== pwd) { showToast('密码错误'); return; }
+  setCurrentUser(user);
+  loginRole = ''; loginUnit = ''; loginUser = '';
+  document.getElementById('login-password').value = '';
+  showScreen('dashboard');
+}
+
+// ==================== DASHBOARD ====================
+function renderDashboard() {
+  const user = getCurrentUser();
+  const role = getRole();
+  const store = getStore();
+  const year = currentYear, month = currentMonth, quarter = currentQuarter;
+
+  document.getElementById('dash-greeting').textContent = `你好，${user.name}`;
+  document.getElementById('dash-role-tag').textContent = `${ROLE_NAMES[role]}${user.unitId ? ' · ' + getUnitName(user.unitId) : ''}`;
+
+  // hide all dash sections
+  document.getElementById('admin-dash').style.display = 'none';
+  document.getElementById('unit-dash').style.display = 'none';
+  document.getElementById('expert-dash').style.display = 'none';
+
+  // Show sync status bar for all roles
+  const syncConfig = getSyncConfig();
+  if (syncConfig.enabled) {
+    document.getElementById('sync-status-bar').style.display = '';
+    if (syncConfig.lastSync) {
+      updateSyncUI('synced', '已同步 ' + new Date(syncConfig.lastSync).toLocaleTimeString('zh-CN'));
+    } else {
+      updateSyncUI('syncing', '等待首次同步...');
+    }
+  } else {
+    document.getElementById('sync-status-bar').style.display = role === ROLES.ADMIN ? '' : 'none';
+  }
+
+  if (role === ROLES.ADMIN) {
+    document.getElementById('admin-dash').style.display = '';
+    // Show 3 stat cards
+    document.getElementById('stat-card3').style.display = '';
+    document.getElementById('stat-grid').style.gridTemplateColumns = 'repeat(3,1fr)';
+    // 只有已标记的管理员才能看到云端同步设置卡片
+    const isSyncAdmin = user && user.canManageSync;
+    document.getElementById('sync-settings-card').style.display = isSyncAdmin ? '' : 'none';
+    if (isSyncAdmin) renderSyncSettings();
+    const allDeductions = store.deductions.filter(d => d.year === year && d.month === month);
+    const totalDeduct = allDeductions.reduce((s, d) => s + d.score, 0);
+    const allBonuses = store.bonuses.filter(b => b.year === year && b.month === month);
+    const totalBonus = allBonuses.reduce((s, b) => s + b.score, 0);
+    document.getElementById('stat-score').textContent = totalDeduct.toFixed(1);
+    document.getElementById('stat-label1').textContent = '本月总扣分';
+    document.getElementById('stat-score').parentElement.className = 'stat-card danger';
+    document.getElementById('stat-qscore').textContent = totalBonus.toFixed(1);
+    document.getElementById('stat-label2').textContent = '本月总加分';
+    document.getElementById('stat-qscore').parentElement.className = 'stat-card';
+    document.getElementById('stat-score3').textContent = UNITS.length;
+    document.getElementById('stat-label3').textContent = '参与单位';
+    document.getElementById('stat-card3').className = 'stat-card';
+
+    const pending = store.appeals.filter(a => a.status === 'pending');
+    const unassigned = pending.filter(a => (a.assignedExperts || []).length === 0);
+    const reminder = document.getElementById('admin-appeal-reminder');
+    if (pending.length > 0) {
+      reminder.style.display = '';
+      const unassignHint = unassigned.length > 0 ? `（${unassigned.length}条待选配专家）` : '';
+      reminder.textContent = `📢 有 ${pending.length} 条申诉待处理${unassignHint}，点击查看`;
+    } else {
+      reminder.style.display = 'none';
+    }
+  } else if (role === ROLES.UNIT) {
+    document.getElementById('stat-card3').style.display = 'none';
+    document.getElementById('stat-grid').style.gridTemplateColumns = 'repeat(2,1fr)';
+    document.getElementById('unit-dash').style.display = '';
+    const deductions = store.deductions.filter(d => d.unitId === user.unitId && d.year === year && d.month === month);
+    const totalDeduct = deductions.reduce((s, d) => s + d.score, 0);
+    const totalBonus = store.bonuses.filter(b => b.unitId === user.unitId && b.year === year && b.month === month).reduce((s, b) => s + b.score, 0);
+    const myScore = Math.min(TOTAL_SCORE, Math.max(0, TOTAL_SCORE - totalDeduct + totalBonus));
+
+    document.getElementById('stat-score').textContent = myScore.toFixed(1);
+    document.getElementById('stat-label1').textContent = '本月得分' + (totalBonus > 0 ? '（含加分+' + totalBonus.toFixed(1) + '）' : '');
+    document.getElementById('stat-score').parentElement.className = 'stat-card' + (myScore < TOTAL_SCORE * 0.9 ? ' danger' : '');
+
+    // quarterly score
+    const qmonths = getQuarterMonths(quarter);
+    let qTotal = 0;
+    qmonths.forEach(m => {
+      const dds = store.deductions.filter(d => d.unitId === user.unitId && d.year === year && d.month === m);
+      const deduct = dds.reduce((s, d) => s + d.score, 0);
+      const bonus = store.bonuses.filter(b => b.unitId === user.unitId && b.year === year && b.month === m).reduce((s, b) => s + b.score, 0);
+      qTotal += Math.min(TOTAL_SCORE, Math.max(0, TOTAL_SCORE - deduct + bonus));
+    });
+    const qScore = (qTotal / 3).toFixed(1);
+    document.getElementById('stat-qscore').textContent = qScore;
+    document.getElementById('stat-label2').textContent = '季度均分';
+    document.getElementById('stat-qscore').parentElement.className = 'stat-card warning';
+
+    // deduction + bonus list
+    let dhtml = '';
+    const bonuses = store.bonuses.filter(b => b.unitId === user.unitId && b.year === year && b.month === month);
+    const bhtml = bonuses.map(b => `<div class="deduction-item" style="border-left:3px solid var(--primary)">
+        <div class="d-title">🌟 ${b.reason}</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:4px">
+          <span class="d-meta">${b.year}年${b.month}月</span>
+          <span class="d-score" style="color:var(--primary)">+${b.score}分</span>
+        </div>
+      </div>`).join('');
+    if (deductions.length === 0 && bonuses.length === 0) dhtml = '<div class="empty"><div class="icon">✅</div>本月无扣分/加分记录</div>';
+    else dhtml = bhtml;
+    deductions.forEach(d => {
+      dhtml += `<div class="deduction-item">
+        <div class="d-title">${d.reason}</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:4px">
+          <span class="d-meta">${d.year}年${d.month}月</span>
+          <span class="d-score">-${d.score}分</span>
+        </div>
+      </div>`;
+    });
+    document.getElementById('unit-deductions').innerHTML = dhtml;
+  } else if (role === ROLES.EXPERT) {
+    document.getElementById('stat-card3').style.display = 'none';
+    document.getElementById('stat-grid').style.gridTemplateColumns = 'repeat(2,1fr)';
+    document.getElementById('expert-dash').style.display = '';
+    const assignedPending = store.appeals.filter(a => a.status === 'pending' && (a.assignedExperts || []).includes(user.id));
+    const reminder = document.getElementById('expert-appeal-reminder');
+    document.getElementById('stat-score').textContent = assignedPending.length;
+    document.getElementById('stat-label1').textContent = '待我评议';
+    document.getElementById('stat-score').parentElement.className = 'stat-card warning';
+
+    const voted = store.appeals.filter(a => (a.assignedExperts || []).includes(user.id) && a.votes && a.votes.some(v => v.userId === user.id)).length;
+    document.getElementById('expert-voted').textContent = voted;
+    document.getElementById('stat-qscore').textContent = voted;
+    document.getElementById('stat-label2').textContent = '已评议';
+    document.getElementById('stat-qscore').parentElement.className = 'stat-card';
+
+    if (assignedPending.length > 0) {
+      reminder.style.display = '';
+      reminder.textContent = `📢 有 ${assignedPending.length} 条申诉待您评议，点击查看`;
+    } else {
+      reminder.style.display = 'none';
+    }
+  }
+
+  // update appeal badge
+  updateAppealBadge();
+}
+
+function updateAppealBadge() {
+  const store = getStore();
+  const role = getRole();
+  const user = getCurrentUser();
+  let count = 0;
+  if (role === ROLES.ADMIN) count = store.appeals.filter(a => a.status === 'pending').length;
+  else if (role === ROLES.EXPERT) count = store.appeals.filter(a => a.status === 'pending' && (a.assignedExperts || []).includes(user.id)).length;
+  else if (role === ROLES.UNIT) count = store.appeals.filter(a => a.unitId === user.unitId).length;
+
+  const badge = document.getElementById('nav-appeal');
+  if (count > 0) {
+    badge.setAttribute('data-count', count);
+    badge.classList.add('badge');
+  } else {
+    badge.removeAttribute('data-count');
+    badge.classList.remove('badge');
+  }
+}
+
+// ==================== MONTHLY SCORE ====================
+function renderMonthlyScore() {
+  const store = getStore();
+  const year = scoreYear, month = scoreMonth;
+  document.getElementById('ms-year-label').textContent = `${year}年`;
+
+  // Highlight active month tab
+  for (let m = 1; m <= 12; m++) {
+    const tab = document.getElementById('ms-tab-' + m);
+    if (tab) {
+      tab.classList.toggle('active', m === month);
+    }
+  }
+
+  let html = `<div style="text-align:center;color:var(--text-secondary);font-size:14px;margin-bottom:8px">${year}年${month}月</div>`;
+  UNITS.forEach(unit => {
+    const deductions = store.deductions.filter(d => d.unitId === unit.id && d.year === year && d.month === month);
+    const totalDeduct = deductions.reduce((s, d) => s + d.score, 0);
+    const totalBonus = store.bonuses.filter(b => b.unitId === unit.id && b.year === year && b.month === month).reduce((s, b) => s + b.score, 0);
+    const score = Math.min(TOTAL_SCORE, Math.max(0, TOTAL_SCORE - totalDeduct + totalBonus));
+    const cls = score >= TOTAL_SCORE * 0.93 ? '' : (score >= TOTAL_SCORE * 0.83 ? 'mid' : 'low');
+    const bonusInfo = totalBonus > 0 ? ` ｜ 加分 +${totalBonus.toFixed(1)}` : '';
+    const bonusCount = store.bonuses.filter(b => b.unitId === unit.id && b.year === year && b.month === month).length;
+    html += `<div class="list-item" onclick="navTo('monthly-detail',{unitId:'${unit.id}',year:${year},month:${month}})">
+      <div class="info">
+        <div class="title">${unit.name}</div>
+        <div class="sub">扣分 ${totalDeduct.toFixed(1)} · ${deductions.length}条${bonusInfo}</div>
+      </div>
+      <div class="extra"><span class="score ${cls}">${score.toFixed(1)}</span></div>
+      <div class="arrow">›</div>
+    </div>`;
+  });
+  document.getElementById('monthly-score-list').innerHTML = html;
+}
+
+// ==================== MONTHLY DETAIL ====================
+function renderMonthlyDetail() {
+  const { unitId, year, month } = navParams;
+  const store = getStore();
+  document.getElementById('md-title').textContent = `${getUnitName(unitId)} - ${year}年${month}月`;
+  const deductions = store.deductions.filter(d => d.unitId === unitId && d.year === year && d.month === month);
+  const totalDeduct = deductions.reduce((s, d) => s + d.score, 0);
+  const bonuses = store.bonuses.filter(b => b.unitId === unitId && b.year === year && b.month === month);
+  const totalBonus = bonuses.reduce((s, b) => s + b.score, 0);
+  const score = Math.min(TOTAL_SCORE, Math.max(0, TOTAL_SCORE - totalDeduct + totalBonus));
+
+  document.getElementById('md-score').textContent = score.toFixed(1);
+  document.getElementById('md-total-deduct').textContent = totalDeduct.toFixed(1);
+  document.getElementById('md-bonus-info').textContent = totalBonus > 0 ? `  |  加分: +${totalBonus.toFixed(1)}` : '';
+
+  // bonus records
+  let bonusHtml = '';
+  if (bonuses.length > 0) {
+    bonuses.forEach(b => {
+      bonusHtml += `<div class="deduction-item" onclick="navTo('bonus-detail',{id:'${b.id}'})" style="border-left:3px solid var(--primary)">
+        <div class="d-title">${b.reason}</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:4px">
+          <span class="d-meta">${b.year}年${b.month}月</span>
+          <span class="d-score" style="color:var(--primary)">+${b.score}分</span>
+        </div>
+      </div>`;
+    });
+  }
+
+  let html = '';
+  if (bonusHtml) html += `<div class="section-title">🌟 加分记录</div>${bonusHtml}`;
+  html += '<div class="section-title">扣分明细</div>';
+  if (deductions.length === 0) html = '<div class="empty"><div class="icon">✅</div>该月无扣分记录</div>';
+  deductions.forEach(d => {
+    html += `<div class="deduction-item" onclick="navTo('deduction-detail',{id:'${d.id}'})">
+      <div class="d-title">${d.reason}</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:4px">
+        <span class="d-meta">${d.year}年${d.month}月</span>
+        <span class="d-score">-${d.score}分</span>
+      </div>
+    </div>`;
+  });
+  document.getElementById('md-deduction-list').innerHTML = html;
+}
+
+// ==================== QUARTERLY SCORE ====================
+function renderQuarterlyScore() {
+  const store = getStore();
+  const year = quarterYear, quarter = quarterQuarter;
+  const qmonths = getQuarterMonths(quarter);
+  document.getElementById('qs-year-label').textContent = `${year}年`;
+
+  // Render quarter tabs
+  const qNames = ['第一季度','第二季度','第三季度','第四季度'];
+  let qtHtml = '';
+  for (let q = 1; q <= 4; q++) {
+    qtHtml += `<div class="tab ${q === quarter ? 'active' : ''}" style="font-size:13px;padding:8px 4px" id="qt-tab-${q}" onclick="selectQuarter(${q})">${qNames[q-1]}</div>`;
+  }
+  document.getElementById('quarter-tabs').innerHTML = qtHtml;
+
+  let html = '';
+  UNITS.forEach(unit => {
+    let qTotal = 0;
+    let monthDetails = [];
+    qmonths.forEach(m => {
+      const dds = store.deductions.filter(d => d.unitId === unit.id && d.year === year && d.month === m);
+      const deduct = dds.reduce((s, d) => s + d.score, 0);
+      const bonus = store.bonuses.filter(b => b.unitId === unit.id && b.year === year && b.month === m).reduce((s, b) => s + b.score, 0);
+      const ms = Math.min(TOTAL_SCORE, Math.max(0, TOTAL_SCORE - deduct + bonus));
+      qTotal += ms;
+      monthDetails.push({ month: m, score: ms, deduct: deduct, bonus: bonus });
+    });
+    const qScore = (qTotal / 3).toFixed(1);
+
+    html += `<div class="card quarterly-card" onclick="navTo('quarterly-detail',{unitId:'${unit.id}',year:${year},quarter:${quarter}})">
+      <div style="font-weight:600;margin-bottom:8px">${unit.name}</div>
+      <div class="months">
+        ${monthDetails.map(md => `<div class="month-item">
+          <div class="m-score">${md.score.toFixed(1)}</div>
+          <div class="m-label">${md.month}月${md.bonus > 0 ? ' (+' + md.bonus.toFixed(1) + ')' : ''}</div>
+        </div>`).join('')}
+      </div>
+      <div class="result">
+        <div class="small">季度均分</div>
+        <div class="big">${qScore}</div>
+      </div>
+    </div>`;
+  });
+  document.getElementById('quarterly-score-list').innerHTML = html;
+}
+
+// ==================== QUARTERLY DETAIL ====================
+function renderQuarterlyDetail() {
+  const { unitId, year, quarter } = navParams;
+  const store = getStore();
+  const qmonths = getQuarterMonths(quarter);
+  document.getElementById('qd-title').textContent = `${getUnitName(unitId)}季度详情`;
+
+  let qTotal = 0;
+  let html = `<div style="text-align:center;padding:20px 0">
+    <div style="font-size:14px;color:var(--text-secondary)">${year}年第${quarter}季度</div>
+  </div>`;
+
+  qmonths.forEach(m => {
+    const dds = store.deductions.filter(d => d.unitId === unitId && d.year === year && d.month === m);
+    const deduct = dds.reduce((s, d) => s + d.score, 0);
+    const bonus = store.bonuses.filter(b => b.unitId === unitId && b.year === year && b.month === m).reduce((s, b) => s + b.score, 0);
+    const ms = Math.min(TOTAL_SCORE, Math.max(0, TOTAL_SCORE - deduct + bonus));
+    qTotal += ms;
+
+    const bonusText = bonus > 0 ? ` 加${bonus.toFixed(1)}分` : '';
+    html += `<div class="card">
+      <div style="font-weight:600;margin-bottom:8px">📅 ${m}月 — 得分: ${ms.toFixed(1)} (扣${deduct.toFixed(1)}分${bonusText})</div>`;
+    if (dds.length === 0 && bonus === 0) html += '<div style="color:var(--text-light);font-size:13px">无扣分记录</div>';
+    const bonusRecords = store.bonuses.filter(b => b.unitId === unitId && b.year === year && b.month === m);
+    bonusRecords.forEach(b => {
+      html += `<div class="deduction-item" style="border-left:3px solid var(--primary)">
+        <div class="d-title">🌟 ${b.reason}</div>
+        <div class="d-meta" style="color:var(--primary)">加 ${b.score} 分</div>
+      </div>`;
+    });
+    dds.forEach(d => {
+      html += `<div class="deduction-item"><div class="d-title">${d.reason}</div><div class="d-meta">扣 ${d.score} 分</div></div>`;
+    });
+    html += '</div>';
+  });
+
+  const qScore = (qTotal / 3).toFixed(1);
+  html += `<div class="card" style="text-align:center;background:var(--primary);color:#fff">
+    <div style="font-size:14px;opacity:.8">季度均分</div>
+    <div style="font-size:36px;font-weight:700">${qScore}</div>
+  </div>`;
+
+  document.getElementById('qd-content').innerHTML = html;
+}
+
+// ==================== DEDUCTION LIST ====================
+function switchDeductionTab(t) {
+  dedTab = t;
+  document.querySelectorAll('#screen-deduction-list .tab').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('#screen-deduction-list .tab')[t === 'all' ? 0 : 1].classList.add('active');
+  renderDeductionList();
+}
+
+function renderDeductionList() {
+  const store = getStore();
+  const user = getCurrentUser();
+  const role = getRole();
+  let list = [...store.deductions].reverse();
+
+  if (role === ROLES.UNIT || dedTab === 'mine') {
+    list = list.filter(d => d.unitId === user.unitId);
+  }
+
+  document.getElementById('dl-create-btn').style.display = (role === ROLES.ADMIN) ? '' : 'none';
+
+  let html = '';
+  if (list.length === 0) html = '<div class="empty"><div class="icon">📝</div>暂无扣分记录</div>';
+  list.forEach(d => {
+    html += `<div class="list-item" onclick="navTo('deduction-detail',{id:'${d.id}'})">
+      <div class="info">
+        <div class="title">${getUnitName(d.unitId)} · ${d.reason}</div>
+        <div class="sub">${d.year}年${d.month}月</div>
+      </div>
+      <div class="extra"><span class="score low" style="font-size:18px">-${d.score}</span></div>
+      <div class="arrow">›</div>
+    </div>`;
+  });
+  document.getElementById('deduction-list-content').innerHTML = html;
+}
+
+// ==================== DEDUCTION CREATE ====================
+function renderDeductionCreate() {
+  const store = getStore();
+  let uhtml = '';
+  UNITS.forEach(u => uhtml += `<option value="${u.id}">${u.name}</option>`);
+  document.getElementById('dc-unit').innerHTML = uhtml;
+  document.getElementById('dc-score').value = '';
+  document.getElementById('dc-reason').value = '';
+  const ym = `${currentYear}-${String(currentMonth).padStart(2,'0')}`;
+  document.getElementById('dc-month').value = ym;
+}
+
+function createDeduction() {
+  const store = getStore();
+  const unitId = document.getElementById('dc-unit').value;
+  const score = parseFloat(document.getElementById('dc-score').value);
+  const reason = document.getElementById('dc-reason').value.trim();
+  let monthStr = document.getElementById('dc-month').value;
+
+  if (!unitId) { showToast('请选择单位'); return; }
+  if (!score || score <= 0) { showToast('请输入有效扣分值'); return; }
+  if (!reason) { showToast('请填写扣分原因'); return; }
+
+  let year = currentYear, month = currentMonth;
+  if (monthStr) {
+    const [y, m] = monthStr.split('-').map(Number);
+    year = y; month = m;
+  }
+
+  const id = 'd' + (store.nextIds.deduction++);
+  store.deductions.push({ id, unitId, score, reason, year, month, time: new Date().toISOString() });
+  saveStore(store);
+  showToast('扣分记录已创建');
+  navTo('deduction-list');
+}
+
+// ==================== DEDUCTION DETAIL ====================
+function renderDeductionDetail() {
+  const { id } = navParams;
+  const store = getStore();
+  const d = store.deductions.find(x => x.id === id);
+  if (!d) { document.getElementById('dd-content').innerHTML = '<div class="empty">记录不存在</div>'; return; }
+
+  const relatedAppeals = store.appeals.filter(a => a.deductionId === d.id);
+  let html = `<div class="card">
+    <div style="font-size:24px;font-weight:700;color:var(--danger);text-align:center;margin-bottom:16px">-${d.score} 分</div>
+    <div class="form-group"><label>被扣分单位</label><div style="font-weight:500">${getUnitName(d.unitId)}</div></div>
+    <div class="form-group"><label>扣分原因</label><div>${d.reason}</div></div>
+    <div class="form-group"><label>考核月份</label><div>${d.year}年${d.month}月</div></div>
+  </div>`;
+
+  if (relatedAppeals.length > 0) {
+    html += '<div class="section-title">相关申诉</div>';
+    relatedAppeals.forEach(a => {
+      const statusTag = { pending: '<span class="tag tag-orange">待评议</span>', approved: '<span class="tag tag-green">已通过</span>', rejected: '<span class="tag tag-red">已驳回</span>' }[a.status];
+      html += `<div class="card" onclick="navTo('appeal-detail',{id:'${a.id}'})">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <span style="font-weight:500">${a.reason.substring(0,20)}...</span>
+          ${statusTag}
+        </div>
+        <div class="d-meta">责任单位: ${getUnitName(a.responsibleUnitId)}</div>
+      </div>`;
+    });
+  }
+
+  document.getElementById('dd-content').innerHTML = html;
+}
+
+// ==================== BONUS LIST ====================
+function switchBonusTab(t) {
+  bonusTab = t;
+  document.querySelectorAll('#screen-bonus-list .tab').forEach(el => el.classList.remove('active'));
+  const idx = t === 'all' ? 0 : 1;
+  document.querySelectorAll('#screen-bonus-list .tab')[idx].classList.add('active');
+  renderBonusList();
+}
+
+function renderBonusList() {
+  const store = getStore();
+  const role = getRole();
+  const user = getCurrentUser();
+
+  let list = [...store.bonuses].reverse();
+
+  if (role === ROLES.UNIT || bonusTab === 'mine') {
+    list = list.filter(d => d.unitId === user.unitId);
+  }
+
+  document.getElementById('bl-create-btn').style.display = (role === ROLES.ADMIN) ? '' : 'none';
+
+  let html = '';
+  if (list.length === 0) html = '<div class="empty"><div class="icon">🌟</div>暂无加分记录</div>';
+  list.forEach(b => {
+    html += `<div class="list-item" onclick="navTo('bonus-detail',{id:'${b.id}'})">
+      <div class="info">
+        <div class="title">${getUnitName(b.unitId)} · ${b.reason}</div>
+        <div class="sub">${b.year}年${b.month}月</div>
+      </div>
+      <div class="extra"><span class="score" style="color:var(--primary);font-size:18px">+${b.score}</span></div>
+      <div class="arrow">›</div>
+    </div>`;
+  });
+  document.getElementById('bonus-list-content').innerHTML = html;
+}
+
+// ==================== BONUS CREATE ====================
+function renderBonusCreate() {
+  const store = getStore();
+  let uhtml = '';
+  UNITS.forEach(u => uhtml += `<option value="${u.id}">${u.name}</option>`);
+  document.getElementById('bc-unit').innerHTML = uhtml;
+  document.getElementById('bc-score').value = '';
+  document.getElementById('bc-reason').value = '';
+  const ym = `${currentYear}-${String(currentMonth).padStart(2,'0')}`;
+  document.getElementById('bc-month').value = ym;
+}
+
+function createBonus() {
+  const store = getStore();
+  const unitId = document.getElementById('bc-unit').value;
+  const score = parseFloat(document.getElementById('bc-score').value);
+  const reason = document.getElementById('bc-reason').value.trim();
+  let monthStr = document.getElementById('bc-month').value;
+
+  if (!unitId) { showToast('请选择单位'); return; }
+  if (!score || score <= 0) { showToast('请输入有效加分值'); return; }
+  if (!reason) { showToast('请填写加分原因'); return; }
+
+  let year = currentYear, month = currentMonth;
+  if (monthStr) {
+    const [y, m] = monthStr.split('-').map(Number);
+    year = y; month = m;
+  }
+
+  const id = 'b' + (store.nextIds.bonus++);
+  store.bonuses.push({ id, unitId, score, reason, year, month, time: new Date().toISOString() });
+  saveStore(store);
+  showToast('加分记录已创建');
+  navTo('bonus-list');
+}
+
+// ==================== BONUS DETAIL ====================
+function renderBonusDetail() {
+  const { id } = navParams;
+  const store = getStore();
+  const b = store.bonuses.find(x => x.id === id);
+  if (!b) { document.getElementById('bd-content').innerHTML = '<div class="empty">记录不存在</div>'; return; }
+
+  let html = `<div class="card">
+    <div style="font-size:24px;font-weight:700;color:var(--primary);text-align:center;margin-bottom:16px">+${b.score} 分</div>
+    <div class="form-group"><label>加分单位</label><div style="font-weight:500">${getUnitName(b.unitId)}</div></div>
+    <div class="form-group"><label>加分原因</label><div>${b.reason}</div></div>
+    <div class="form-group"><label>考核月份</label><div>${b.year}年${b.month}月</div></div>
+  </div>`;
+
+  document.getElementById('bd-content').innerHTML = html;
+}
+
+// ==================== APPEAL LIST ====================
+function switchAppealTab(t) {
+  appealTab = t;
+  document.querySelectorAll('#screen-appeal-list .tab').forEach(el => el.classList.remove('active'));
+  const idx = t === 'all' ? 0 : (t === 'mine' ? 1 : 2);
+  document.querySelectorAll('#screen-appeal-list .tab')[idx].classList.add('active');
+  renderAppealList();
+}
+
+function renderAppealList() {
+  const store = getStore();
+  const user = getCurrentUser();
+  const role = getRole();
+  let list = [...store.appeals].reverse();
+
+  if (appealTab === 'pending') {
+    if (role === ROLES.EXPERT) list = list.filter(a => a.status === 'pending' && (a.assignedExperts || []).includes(user.id));
+    else list = list.filter(a => a.status === 'pending');
+  }
+  else if (appealTab === 'mine' && role === ROLES.UNIT) list = list.filter(a => a.unitId === user.unitId);
+
+  let html = '';
+  if (list.length === 0) html = '<div class="empty"><div class="icon">📢</div>暂无申诉记录</div>';
+  list.forEach(a => {
+    const d = store.deductions.find(x => x.id === a.deductionId);
+    const statusTag = { pending: '<span class="tag tag-orange">待评议</span>', approved: '<span class="tag tag-green">已通过</span>', rejected: '<span class="tag tag-red">已驳回</span>' }[a.status];
+    const agreeCount = (a.votes || []).filter(v => v.agree).length;
+    const disagreeCount = (a.votes || []).filter(v => !v.agree).length;
+    const assignedCount = (a.assignedExperts || []).length;
+
+    html += `<div class="card" onclick="navTo('appeal-detail',{id:'${a.id}'})">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start">
+        <div style="flex:1;min-width:0">
+          <div style="font-weight:600;font-size:15px">${getUnitName(a.unitId)} → ${getUnitName(a.responsibleUnitId)}</div>
+          <div style="font-size:13px;color:var(--text-secondary);margin-top:2px">${a.reason.substring(0,30)}...</div>
+          <div style="font-size:12px;color:var(--text-light);margin-top:4px">扣分: ${d ? d.reason : '--'} (${d ? d.score : '--'}分)</div>
+        </div>
+        <div style="text-align:right;flex-shrink:0;margin-left:8px">${statusTag}</div>
+      </div>
+      <div style="font-size:12px;color:var(--text-light);margin-top:8px">
+        同意 ${agreeCount} · 不同意 ${disagreeCount}${assignedCount > 0 ? ' · 评议专家 ' + assignedCount + '人' : ' · 未选配专家'}
+      </div>
+    </div>`;
+  });
+  document.getElementById('appeal-list-content').innerHTML = html;
+}
+
+// ==================== APPEAL CREATE ====================
+function renderAppealCreate() {
+  const store = getStore();
+  const user = getCurrentUser();
+  const year = currentYear, month = currentMonth;
+  const deductions = store.deductions.filter(d => d.unitId === user.unitId && d.year === year && d.month === month);
+
+  let dhtml = '<option value="">请选择扣分记录</option>';
+  deductions.forEach(d => dhtml += `<option value="${d.id}">${d.reason} (-${d.score}分)</option>`);
+  document.getElementById('ac-deduction').innerHTML = dhtml;
+
+  let uhtml = '<option value="">请选择责任单位</option>';
+  UNITS.filter(u => u.id !== user.unitId).forEach(u => uhtml += `<option value="${u.id}">${u.name}</option>`);
+  document.getElementById('ac-responsible').innerHTML = uhtml;
+
+  document.getElementById('ac-reason').value = '';
+  document.getElementById('ac-deduction-info').style.display = 'none';
+}
+
+function onAppealDeductionChange() {
+  const deductionId = document.getElementById('ac-deduction').value;
+  const store = getStore();
+  const d = store.deductions.find(x => x.id === deductionId);
+  const info = document.getElementById('ac-deduction-info');
+  if (d) {
+    info.style.display = '';
+    info.innerHTML = `<strong>${d.reason}</strong><br>扣分: ${d.score}分 · ${d.year}年${d.month}月`;
+  } else {
+    info.style.display = 'none';
+  }
+}
+
+function createAppeal() {
+  const store = getStore();
+  const user = getCurrentUser();
+  const deductionId = document.getElementById('ac-deduction').value;
+  const reason = document.getElementById('ac-reason').value.trim();
+  const responsibleUnitId = document.getElementById('ac-responsible').value;
+
+  if (!deductionId) { showToast('请选择扣分记录'); return; }
+  if (!reason) { showToast('请填写申诉理由'); return; }
+  if (!responsibleUnitId) { showToast('请选择责任单位'); return; }
+
+  const id = 'a' + (store.nextIds.appeal++);
+  store.appeals.push({
+    id, deductionId, unitId: user.unitId, reason, responsibleUnitId,
+    status: 'pending', time: new Date().toISOString(), votes: [], result: null, assignedExperts: [],
+  });
+  saveStore(store);
+  showToast('申诉已提交');
+  navTo('appeal-list');
+}
+
+// ==================== APPEAL DETAIL (with voting + expert assignment) ====================
+function renderAppealDetail() {
+  const { id } = navParams;
+  const store = getStore();
+  const user = getCurrentUser();
+  const role = getRole();
+  const a = store.appeals.find(x => x.id === id);
+  if (!a) { document.getElementById('ad-content').innerHTML = '<div class="empty">申诉不存在</div>'; return; }
+
+  const d = store.deductions.find(x => x.id === a.deductionId);
+  const allExperts = store.users.filter(u => u.role === ROLES.EXPERT);
+  const assignedExperts = a.assignedExperts || [];
+  const agreeCount = (a.votes || []).filter(v => v.agree).length;
+  const disagreeCount = (a.votes || []).filter(v => !v.agree).length;
+  const total = agreeCount + disagreeCount;
+  const hasVoted = (a.votes || []).some(v => v.userId === user.id);
+  const isAssigned = role === ROLES.EXPERT && assignedExperts.includes(user.id);
+
+  const statusText = { pending: '待评议', approved: '已通过', rejected: '已驳回' };
+  const statusClass = { pending: 'tag-orange', approved: 'tag-green', rejected: 'tag-red' };
+
+  // Build assigned expert tags
+  let assignedTagsHtml = '';
+  if (assignedExperts.length > 0) {
+    assignedTagsHtml = '<div class="assigned-expert-tags">';
+    assignedExperts.forEach(eid => {
+      const eu = store.users.find(u => u.id === eid);
+      const voted = (a.votes || []).some(v => v.userId === eid);
+      assignedTagsHtml += `<span class="assigned-expert-tag${voted ? '' : ' unvoted'}">${eu ? eu.name : eid}${voted ? ' ✓' : ''}</span>`;
+    });
+    assignedTagsHtml += '</div>';
+  } else {
+    assignedTagsHtml = '<div style="color:var(--text-light);font-size:13px">尚未选配专家</div>';
+  }
+
+  // Build expert assignment panel for admin
+  let assignPanelHtml = '';
+  if (role === ROLES.ADMIN && a.status === 'pending') {
+    let expertCardsHtml = '';
+    allExperts.forEach(eu => {
+      const isSelected = assignedExperts.includes(eu.id);
+      expertCardsHtml += `<div class="expert-assign-card${isSelected ? ' selected' : ''}" onclick="toggleAssignExpert('${a.id}','${eu.id}')">
+        <div class="check-circle">${isSelected ? '✓' : ''}</div>
+        <div><div style="font-weight:500">${eu.name}</div></div>
+      </div>`;
+    });
+    assignPanelHtml = `<div class="card">
+      <div class="card-title">🎓 选配评议专家</div>
+      <div style="font-size:13px;color:var(--text-secondary);margin-bottom:12px">从专家库中选择负责本次申诉评议的专家，选择后这些专家将能看到此申诉并投票。</div>
+      ${expertCardsHtml}
+      <div style="margin-top:8px;font-size:12px;color:var(--text-light)">已选 ${assignedExperts.length} / ${allExperts.length} 位专家</div>
+    </div>`;
+  }
+
+  let voteInfoHtml = '';
+  if (total > 0) {
+    const voteTarget = assignedExperts.length > 0 ? assignedExperts.length : allExperts.length;
+    const agreePct = (agreeCount / voteTarget * 100).toFixed(0);
+    const disagreePct = (disagreeCount / voteTarget * 100).toFixed(0);
+    voteInfoHtml = `<div class="vote-result">
+      <div style="font-weight:600;margin-bottom:4px">投票情况 (${total}/${voteTarget})</div>
+      <div class="vote-bar">
+        <div class="vote-agree" style="width:${agreePct}%">${agreeCount > 0 ? '同意 '+agreeCount : ''}</div>
+        <div class="vote-disagree" style="width:${disagreePct}%">${disagreeCount > 0 ? disagreeCount + ' 不同意' : ''}</div>
+      </div>
+      <div class="vote-info"><span>同意: ${agreeCount}票</span><span>不同意: ${disagreeCount}票</span></div>
+    </div>`;
+
+    if ((a.votes || []).length > 0) {
+      if (role === ROLES.ADMIN) {
+        voteInfoHtml += '<div style="margin-top:8px;font-size:13px;color:var(--text-secondary)"><div style="font-weight:500;margin-bottom:4px">投票明细：</div>';
+        a.votes.forEach(v => {
+          const vu = store.users.find(u => u.id === v.userId);
+          voteInfoHtml += `<div style="display:flex;justify-content:space-between;padding:3px 0">
+            <span>${vu ? vu.name : v.userId}</span>
+            <span style="color:${v.agree ? 'var(--success)' : 'var(--danger)'};font-weight:500">${v.agree ? '同意' : '不同意'}</span>
+          </div>`;
+        });
+        voteInfoHtml += '</div>';
+      } else if (role === ROLES.EXPERT && hasVoted) {
+        const myVote = a.votes.find(v => v.userId === user.id);
+        if (myVote) {
+          voteInfoHtml += `<div style="margin-top:8px;font-size:13px;color:var(--text-secondary)">
+            <span>我的投票：</span>
+            <span style="color:${myVote.agree ? 'var(--success)' : 'var(--danger)'};font-weight:500">
+              ${myVote.agree ? '同意' : '不同意'}
+            </span>
+          </div>`;
+        }
+      }
+    }
+  }
+
+  let actionHtml = '';
+  if (a.status === 'pending') {
+    if (role === ROLES.EXPERT && isAssigned && !hasVoted) {
+      actionHtml = `<div class="btn-group">
+        <button class="btn btn-success btn-block" onclick="voteAppeal('${a.id}',true)">✅ 同意申诉</button>
+        <button class="btn btn-danger btn-block" onclick="voteAppeal('${a.id}',false)">❌ 不同意</button>
+      </div>`;
+    } else if (role === ROLES.EXPERT && isAssigned && hasVoted) {
+      actionHtml = '<div class="alert alert-info">您已投票</div>';
+    } else if (role === ROLES.EXPERT && !isAssigned) {
+      actionHtml = '<div class="alert alert-info">您未被分配到此申诉的评议</div>';
+    }
+    if (role === ROLES.ADMIN) {
+      const voteTarget = assignedExperts.length > 0 ? assignedExperts.length : 0;
+      if (assignedExperts.length === 0) {
+        actionHtml += '<div class="alert alert-warning">请先选配专家，专家投票后可结案</div>';
+      } else if (total >= voteTarget) {
+        actionHtml += `<button class="btn btn-primary btn-block" style="margin-top:8px" onclick="closeAppeal('${a.id}')">📋 结案（统计投票结果）</button>`;
+      } else {
+        actionHtml += `<div class="alert alert-info">等待专家全部投票后即可结案 (${total}/${voteTarget})</div>`;
+      }
+    }
+  }
+
+  if (a.status !== 'pending' && a.result) {
+    actionHtml = `<div class="alert alert-${a.status === 'approved' ? 'success' : 'danger'}">
+      <strong>申诉${a.status === 'approved' ? '已通过' : '已驳回'}</strong>
+      ${a.result.note || ''}
+    </div>`;
+  }
+
+  const html = `<div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+      <span style="font-weight:600">${getUnitName(a.unitId)} 发起的申诉</span>
+      <span class="tag ${statusClass[a.status]}">${statusText[a.status]}</span>
+    </div>
+    <div class="form-group"><label>相关扣分</label>
+      <div class="deduction-item">
+        <div class="d-title">${d ? d.reason : '已删除'}</div>
+        <div class="d-meta">${d ? d.score + '分' : ''} · ${d ? d.year+'年'+d.month+'月' : ''}</div>
+      </div>
+    </div>
+    <div class="form-group"><label>申诉理由</label><div style="font-size:15px">${a.reason}</div></div>
+    <div class="form-group"><label>责任单位</label><div style="font-weight:500;color:var(--danger)">${getUnitName(a.responsibleUnitId)}</div></div>
+    <div class="form-group"><label>评议专家</label>${assignedTagsHtml}</div>
+  </div>
+
+  ${assignPanelHtml}
+
+  <div class="card">
+    <div class="card-title">投票评议</div>
+    ${voteInfoHtml || '<div style="color:var(--text-light)">暂无投票</div>'}
+  </div>
+
+  ${actionHtml}`;
+
+  document.getElementById('ad-content').innerHTML = html;
+}
+
+function toggleAssignExpert(appealId, expertId) {
+  const store = getStore();
+  const a = store.appeals.find(x => x.id === appealId);
+  if (!a || a.status !== 'pending') return;
+  a.assignedExperts = a.assignedExperts || [];
+  if (a.assignedExperts.includes(expertId)) {
+    a.assignedExperts = a.assignedExperts.filter(eid => eid !== expertId);
+    // also remove their vote if they already voted
+    a.votes = (a.votes || []).filter(v => v.userId !== expertId);
+  } else {
+    a.assignedExperts.push(expertId);
+  }
+  saveStore(store);
+  renderAppealDetail();
+  updateAppealBadge();
+}
+
+function voteAppeal(appealId, agree) {
+  const store = getStore();
+  const user = getCurrentUser();
+  const a = store.appeals.find(x => x.id === appealId);
+  if (!a || a.status !== 'pending') return;
+  const assignedExperts = a.assignedExperts || [];
+  if (assignedExperts.length > 0 && !assignedExperts.includes(user.id)) { showToast('您未被分配到此申诉'); return; }
+  if ((a.votes || []).some(v => v.userId === user.id)) { showToast('您已投票'); return; }
+
+  a.votes = a.votes || [];
+  a.votes.push({ userId: user.id, agree, time: new Date().toISOString() });
+  saveStore(store);
+  showToast(agree ? '已投同意票' : '已投不同意票');
+  renderAppealDetail();
+  updateAppealBadge();
+}
+
+function closeAppeal(appealId) {
+  const store = getStore();
+  const a = store.appeals.find(x => x.id === appealId);
+  if (!a || a.status !== 'pending') return;
+
+  const agreeCount = (a.votes || []).filter(v => v.agree).length;
+  const disagreeCount = (a.votes || []).filter(v => !v.agree).length;
+
+  if (agreeCount > disagreeCount) {
+    // approved - transfer deduction to responsible unit
+    a.status = 'approved';
+    const assignedCount = (a.assignedExperts || []).length;
+    a.result = { note: `同意 ${agreeCount}票 > 不同意 ${disagreeCount}票，扣分已转移至${getUnitName(a.responsibleUnitId)}` };
+
+    const d = store.deductions.find(x => x.id === a.deductionId);
+    if (d) {
+      // remove original deduction
+      store.deductions = store.deductions.filter(x => x.id !== a.deductionId);
+      // create new deduction on responsible unit
+      const newId = 'd' + (store.nextIds.deduction++);
+      store.deductions.push({
+        id: newId, unitId: a.responsibleUnitId, score: d.score,
+        reason: d.reason + '（由' + getUnitName(a.unitId) + '申诉转移）',
+        year: d.year, month: d.month, time: new Date().toISOString(),
+      });
+    }
+  } else {
+    a.status = 'rejected';
+    a.result = { note: `同意 ${agreeCount}票 ≤ 不同意 ${disagreeCount}票，申诉被驳回` };
+  }
+
+  saveStore(store);
+  showToast(a.status === 'approved' ? '申诉通过，分值已转移' : '申诉被驳回');
+  renderAppealDetail();
+  updateAppealBadge();
+}
+
+// ==================== MEMBERS ====================
+let currentMemberRole = 'unit';
+
+function switchMemberTab(t) {
+  memberTab = t;
+  document.querySelectorAll('#screen-members .tab').forEach(el => el.classList.remove('active'));
+  const map = { unit: 0, expert: 1, admin: 2 };
+  document.querySelectorAll('#screen-members .tab')[map[t]].classList.add('active');
+  renderMembers();
+}
+
+function renderMembers() {
+  const store = getStore();
+  currentMemberRole = memberTab === 'admin' ? ROLES.ADMIN : (memberTab === 'expert' ? ROLES.EXPERT : ROLES.UNIT);
+  let users;
+  if (memberTab === 'admin') users = store.users.filter(u => u.role === ROLES.ADMIN);
+  else if (memberTab === 'expert') users = store.users.filter(u => u.role === ROLES.EXPERT);
+  else users = store.users.filter(u => u.role === ROLES.UNIT);
+
+  let html = '';
+  if (users.length === 0) html = '<div class="empty"><div class="icon">📭</div>暂无人员</div>';
+  users.forEach(u => {
+    const isSyncAdmin = u.canManageSync;
+    const syncBadge = isSyncAdmin ? ' <span class="tag tag-blue" style="font-size:10px">同步管理</span>' : '';
+    const delBtn = isSyncAdmin
+      ? ''
+      : `<button class="btn btn-outline btn-sm" onclick="removeMember('${u.id}')">删除</button>`;
+    html += `<div class="list-item">
+      <div class="info">
+        <div class="title">${u.name}${syncBadge}</div>
+        <div class="sub">${ROLE_NAMES[u.role]}${u.unitId ? ' · ' + getUnitName(u.unitId) : ''} · 密码: ${u.password ? '****' : '<span style="color:var(--danger)">未设置</span>'}</div>
+      </div>
+      <button class="btn btn-outline btn-sm" style="margin-right:4px" onclick="showSetPwd('${u.id}')">设密码</button>
+      ${delBtn}
+    </div>`;
+  });
+
+  document.getElementById('members-content').innerHTML = html;
+}
+
+function showAddMember() {
+  document.getElementById('modal-role-label').textContent = ROLE_NAMES[currentMemberRole];
+  const unitGroup = document.getElementById('modal-unit-group');
+  if (currentMemberRole === ROLES.UNIT) {
+    unitGroup.style.display = '';
+    let uhtml = '';
+    UNITS.forEach(u => uhtml += `<option value="${u.id}">${u.name}</option>`);
+    document.getElementById('modal-unit').innerHTML = uhtml;
+  } else {
+    unitGroup.style.display = 'none';
+  }
+  document.getElementById('modal-name').value = '';
+  showModal('modal-add-member');
+}
+
+function addMember() {
+  const store = getStore();
+  const name = document.getElementById('modal-name').value.trim();
+  const pwd = document.getElementById('modal-pwd-add').value;
+  if (!name) { showToast('请输入姓名'); return; }
+  if (!pwd || pwd.length !== 4 || !/^\d{4}$/.test(pwd)) { showToast('请输入4位数字密码'); return; }
+
+  let unitId = null;
+  if (currentMemberRole === ROLES.UNIT) {
+    unitId = document.getElementById('modal-unit').value;
+    if (!unitId) { showToast('请选择单位'); return; }
+  }
+
+  const id = 'u' + (store.nextIds.user++);
+  store.users.push({ id, name, role: currentMemberRole, unitId, password: pwd });
+  saveStore(store);
+  hideModal('modal-add-member');
+  document.getElementById('modal-pwd-add').value = '';
+  renderMembers();
+  showToast('人员已添加');
+}
+
+function removeMember(userId) {
+  const store = getStore();
+  const user = store.users.find(u => u.id === userId);
+  if (user && user.canManageSync) { showToast('同步管理员不可删除'); return; }
+  if (!confirm('确定删除该人员吗？')) return;
+  store.users = store.users.filter(u => u.id !== userId);
+  saveStore(store);
+  renderMembers();
+  showToast('人员已删除');
+}
+
+// ==================== SET PASSWORD ====================
+let setPwdUserId = '';
+function showSetPwd(userId) {
+  const store = getStore();
+  const user = store.users.find(u => u.id === userId);
+  if (!user) return;
+  setPwdUserId = userId;
+  document.getElementById('modal-pwd-user').textContent = user.name + ' (' + ROLE_NAMES[user.role] + (user.unitId ? ' · ' + getUnitName(user.unitId) : '') + ')';
+  document.getElementById('modal-pwd').value = user.password || '';
+  showModal('modal-set-pwd');
+}
+
+function setUserPassword() {
+  const pwd = document.getElementById('modal-pwd').value;
+  if (!pwd || pwd.length !== 4 || !/^\d{4}$/.test(pwd)) { showToast('请输入4位数字密码'); return; }
+  const store = getStore();
+  const user = store.users.find(u => u.id === setPwdUserId);
+  if (!user) return;
+  user.password = pwd;
+  saveStore(store);
+  hideModal('modal-set-pwd');
+  renderMembers();
+  showToast('密码已更新');
+}
+
+// ==================== DATA BACKUP / RESTORE ====================
+function exportData() {
+  const store = getStore();
+  const dataStr = JSON.stringify(store, null, 2);
+  const blob = new Blob([dataStr], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  const n = new Date();
+  const ts = `${n.getFullYear()}-${String(n.getMonth()+1).padStart(2,'0')}-${String(n.getDate()).padStart(2,'0')}_${String(n.getHours()).padStart(2,'0')}-${String(n.getMinutes()).padStart(2,'0')}`;
+  a.href = url;
+  a.download = `平煤机绩效考核_数据备份_${ts}.json`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  showToast('数据备份已下载');
+}
+
+function importData(input) {
+  if (!input.files || !input.files[0]) return;
+  if (!confirm('⚠️ 导入数据将覆盖当前所有数据（扣分记录、申诉记录、人员信息等），此操作不可撤销。确定继续吗？')) {
+    input.value = '';
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (!data.users || !data.deductions || !data.appeals) {
+        showToast('数据格式不正确，请选择正确的备份文件');
+        input.value = '';
+        return;
+      }
+      data._updatedAt = Date.now();
+      saveStoreRaw(data);
+      showToast('数据恢复成功！页面即将刷新');
+      setTimeout(() => { location.reload(); }, 1500);
+    } catch (err) {
+      showToast('JSON解析失败，文件可能损坏');
+      input.value = '';
+    }
+  };
+  reader.readAsText(input.files[0]);
+}
+
+// ==================== INIT ====================
+function initMonthTabs() {
+  const container = document.getElementById('month-tabs');
+  if (!container) return;
+  let html = '';
+  for (let m = 1; m <= 12; m++) {
+    html += `<div class="tab" style="padding:8px 0;font-size:12px;border-radius:6px;background:var(--card);box-shadow:var(--shadow)" id="ms-tab-${m}" onclick="selectMonth(${m})">${m}月</div>`;
+  }
+  container.innerHTML = html;
+}
+
+async function init() {
+  // ===== 防缓存：检测版本更新，强制从服务器加载 =====
+  const storedVersion = localStorage.getItem('_appVersion');
+  if (storedVersion && storedVersion !== APP_VERSION) {
+    // 先更新版本号，防止无限重定向循环
+    localStorage.setItem('_appVersion', APP_VERSION);
+    // 清空所有浏览器缓存（Cache API）
+    if ('caches' in window) {
+      caches.keys().then(keys => keys.forEach(k => caches.delete(k)));
+    }
+    // 用时间戳参数强制浏览器从服务器拉取最新 HTML
+    location.replace(location.origin + location.pathname + '?_t=' + Date.now());
+    return;
+  }
+  localStorage.setItem('_appVersion', APP_VERSION);
+
+  // Cloud sync FIRST — so fresh devices get cloud data before initStore creates blank data
+  await initCloudSync();
+  // Now init local store (if cloud already populated it, this finds existing data)
+  getStore();
+  initMonthTabs();
+  const user = getCurrentUser();
+  if (user) {
+    showScreen('dashboard');
+  } else {
+    showScreen('login');
+  }
+}
+
+document.addEventListener('DOMContentLoaded', init);
+</script>
+
+</body>
+</html>
