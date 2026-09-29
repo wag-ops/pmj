@@ -8,13 +8,6 @@
       "password": "0000"
     },
     {
-      "id": "u_gys",
-      "name": "孙工艺",
-      "role": "unit",
-      "unitId": "gys",
-      "password": "0000"
-    },
-    {
       "id": "u21",
       "name": "黄长鹏",
       "role": "admin",
@@ -238,6 +231,13 @@
       "unitId": null,
       "password": "0001",
       "canManageSync": true
+    },
+    {
+      "id": "u_gys",
+      "name": "孙工艺",
+      "role": "unit",
+      "unitId": "gys",
+      "password": "0000"
     }
   ],
   "deductions": [
@@ -402,8 +402,8 @@
     "bonus": 8
   },
   "_dataCleared": true,
-  "_encToken": "98468863bb4c100a2aad677f6e6d47ed7fd53a2ffcacf13ea20470cf35e5e1375a8b953bb2476914a83445b1f8c87ce9351d3882d640fd748aadb64af2677e8f4c8a9ad3",
-  "_updatedAt": 1790661898210,
+  "_encToken": "24dc7f3402c610f27decf880dff98bf8652153ab29366c81802c4284e89c8728f12fc353788eba669c3540b3c642547fda8f8c01a24ac1bb935af58dd1ffeefd5bcc8e2b",
+  "_updatedAt": 1790662368621,
   "bonuses": [
     {
       "id": "b6",
