@@ -357,6 +357,15 @@
       "year": 2026,
       "month": 8,
       "time": "2026-09-21T00:26:28.787Z"
+    },
+    {
+      "id": "d22",
+      "unitId": "js",
+      "score": 2,
+      "reason": "越南客户10月15日进厂验收前20台联调，10月8日。10月9日还在通知改底座限位块、标牌、连杆吊环，严重影响组装进度。扣2分。",
+      "year": 2026,
+      "month": 10,
+      "time": "2026-10-09T06:11:20.925Z"
     }
   ],
   "appeals": [
@@ -396,14 +405,14 @@
     }
   ],
   "nextIds": {
-    "deduction": 22,
+    "deduction": 23,
     "appeal": 3,
     "user": 53,
     "bonus": 8
   },
   "_dataCleared": true,
-  "_encToken": "24dc7f3402c610f27decf880dff98bf8652153ab29366c81802c4284e89c8728f12fc353788eba669c3540b3c642547fda8f8c01a24ac1bb935af58dd1ffeefd5bcc8e2b",
-  "_updatedAt": 1790662368621,
+  "_encToken": "f3e137002b7b635547d9cb05e933f5382c8f088cc4992d6f2c61dfb31897401c44c3ac35b70cbfe09d9ea3daae6db2964519d5d3b379ac7f52cc6df9a39b5fa43713f499",
+  "_updatedAt": 1791526280925,
   "bonuses": [
     {
       "id": "b6",
